@@ -81,3 +81,4 @@ packaging/dbscripts/*.log
 # jrebel plugin integration for IDE
 # #########################
 *rebel.xml
+/bin/
