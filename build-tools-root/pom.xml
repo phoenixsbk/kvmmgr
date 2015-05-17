@@ -13,6 +13,6 @@
   <modules>
     <module>checkstyles</module>
     <module>jboss-modules-maven-plugin</module>
-    <module>ovirt-checkstyle-extension</module>
+    
   </modules>
 </project>
