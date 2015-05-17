@@ -1,2 +1,0 @@
-This is a small file, so we can run unit tests against it.
-More than one line.

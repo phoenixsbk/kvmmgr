@@ -1,76 +1,60 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.ovirt.engine.core</groupId>
-    <artifactId>manager-modules</artifactId>
-    <version>3.5.2.1</version>
-  </parent>
+	<parent>
+		<groupId>org.ovirt.engine.core</groupId>
+		<artifactId>manager-modules</artifactId>
+		<version>3.5.2.1</version>
+	</parent>
 
-  <artifactId>searchbackend</artifactId>
-  <packaging>jar</packaging>
+	<artifactId>searchbackend</artifactId>
+	<packaging>jar</packaging>
 
-  <name>Search Backend</name>
+	<name>Search Backend</name>
 
-  <properties>
-    <maven.compiler.source>1.6</maven.compiler.source>
-    <maven.compiler.target>1.6</maven.compiler.target>
-    <animal.sniffer.signature>java16</animal.sniffer.signature>
-  </properties>
+	<properties>
+		<maven.compiler.source>1.6</maven.compiler.source>
+		<maven.compiler.target>1.6</maven.compiler.target>
+		<animal.sniffer.signature>java16</animal.sniffer.signature>
+	</properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>${engine.groupId}</groupId>
-      <artifactId>compat</artifactId>
-      <version>${engine.version}</version>
-    </dependency>
+	<dependencies>
+		<dependency>
+			<groupId>${engine.groupId}</groupId>
+			<artifactId>compat</artifactId>
+			<version>${engine.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>${engine.groupId}</groupId>
-      <artifactId>common</artifactId>
-      <version>${engine.version}</version>
-    </dependency>
+		<dependency>
+			<groupId>${engine.groupId}</groupId>
+			<artifactId>common</artifactId>
+			<version>${engine.version}</version>
+		</dependency>
 
-    <dependency>
-      <groupId>${engine.groupId}</groupId>
-      <artifactId>utils</artifactId>
-      <version>${engine.version}</version>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+	</dependencies>
 
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-          <additionalClasspathElements>
-            <additionalClasspathElement>${basedir}/src/test/java</additionalClasspathElement>
-          </additionalClasspathElements>
-        </configuration>
-      </plugin>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-      <plugin>
-        <artifactId>maven-source-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>jar-no-fork</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+			<!-- Create the JBoss module: -->
+			<plugin>
+				<groupId>org.ovirt.engine</groupId>
+				<artifactId>jboss-modules-maven-plugin</artifactId>
+			</plugin>
 
-      <!-- Create the JBoss module: -->
-      <plugin>
-        <groupId>org.ovirt.engine</groupId>
-        <artifactId>jboss-modules-maven-plugin</artifactId>
-      </plugin>
-
-    </plugins>
-  </build>
+		</plugins>
+	</build>
 </project>
