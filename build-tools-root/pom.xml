@@ -11,8 +11,6 @@
   <name>oVirt Build Tools root</name>
   <description>Parent pom of build tools available for use by oVirt modules</description>
   <modules>
-    <module>checkstyles</module>
     <module>jboss-modules-maven-plugin</module>
-    
   </modules>
 </project>
