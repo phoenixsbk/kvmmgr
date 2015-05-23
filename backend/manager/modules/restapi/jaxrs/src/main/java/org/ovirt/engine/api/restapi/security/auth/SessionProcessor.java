@@ -23,6 +23,8 @@ import org.ovirt.engine.core.common.queries.GetConfigurationValueParameters;
 import org.ovirt.engine.core.common.queries.GetValueBySessionQueryParameters;
 import org.ovirt.engine.core.common.queries.VdcQueryType;
 
+import cn.lynx.emi.LicenseService;
+
 @Provider
 @ServerInterceptor
 @Precedence("SECURITY")
@@ -57,6 +59,12 @@ public class SessionProcessor implements PreProcessInterceptor, PostProcessInter
         if (engineSessionId == null) {
             throw new Failure("Engine session missing");
         }
+        
+        String uri = request.getUri().getBaseUri().getRawPath();
+        if (!LicenseService.getInstance().ValidateLicense() && !uri.contains("/license")) {
+        	throw new Failure("Engine license is missing");
+        }
+        
         this.request = request;
 
         sessionHelper.setSessionId(engineSessionId);

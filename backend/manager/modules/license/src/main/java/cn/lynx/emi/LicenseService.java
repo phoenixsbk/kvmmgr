@@ -6,8 +6,17 @@ import cn.lynx.emi.license.LicenseBean;
 import cn.lynx.emi.license.RSAEngine;
 
 public class LicenseService {
+	private static LicenseService instance = new LicenseService();
 	private boolean init = false;
 	private LicenseBean bean;
+	
+	private LicenseService() {
+		initialize(true);
+	}
+	
+	public static LicenseService getInstance() {
+		return instance;
+	}
 
 	private void initialize(boolean forceInit) {
 		if (forceInit) {
