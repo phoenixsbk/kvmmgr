@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>ovirt-engine-extensions-api-root</artifactId>
-	<groupId>org.ovirt.engine.api</groupId>
+	<artifactId>kvmmgr-engine-extensions-api-root</artifactId>
+	<groupId>cn.lynx.emi.kvmmgr.api</groupId>
 	<version>0.0.0</version>
 
 	<packaging>pom</packaging>

@@ -2,16 +2,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.ovirt.engine</groupId>
+        <groupId>cn.lynx.emi.kvmmgr</groupId>
         <artifactId>root</artifactId>
-        <version>3.5.2.1</version>
+        <version>1.0.0</version>
     </parent>
 
     <artifactId>make</artifactId>
     <packaging>pom</packaging>
 
-    <name>ovirt-engine maven make</name>
-    <description>ovirt-engine maven make wrapper</description>
+    <name>kvmmgr-engine maven make</name>
+    <description>kvmmgr-engine maven make wrapper</description>
 
     <properties>
         <prefix>${env.OVIRT_ENGINE_PREFIX}</prefix>

@@ -2,15 +2,15 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.ovirt.engine.core</groupId>
+    <groupId>cn.lynx.emi.kvmmgr.core</groupId>
     <artifactId>manager-modules</artifactId>
-    <version>3.5.2.1</version>
+    <version>1.0.0</version>
   </parent>
 
   <artifactId>restapi-parent</artifactId>
-  <groupId>org.ovirt.engine.api</groupId>
+  <groupId>cn.lynx.emi.kvmmgr.api</groupId>
   <packaging>pom</packaging>
-  <name>oVirt RESTful API Backend Integration</name>
+  <name>KVM Manager RESTful API Backend Integration</name>
 
   <modules>
     <module>types</module>

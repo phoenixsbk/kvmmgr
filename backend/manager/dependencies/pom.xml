@@ -6,15 +6,15 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.ovirt.engine.core</groupId>
+    <groupId>cn.lynx.emi.kvmmgr.core</groupId>
     <artifactId>manager</artifactId>
-    <version>3.5.2.1</version>
+    <version>1.0.0</version>
   </parent>
 
   <artifactId>dependencies</artifactId>
   <packaging>jar</packaging>
 
-  <name>oVirt Engine dependencies</name>
+  <name>KVM Manager Engine dependencies</name>
 
   <!-- We need to put here all the dependencies corresponding to the
        .jar files that will be added to the modules archive: -->

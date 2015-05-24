@@ -3,16 +3,16 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.ovirt.engine.core</groupId>
+    <groupId>cn.lynx.emi.kvmmgr.core</groupId>
     <artifactId>manager</artifactId>
-    <version>3.5.2.1</version>
+    <version>1.0.0</version>
   </parent>
 
   <artifactId>manager-modules</artifactId>
   <packaging>pom</packaging>
 
-  <name>oVirt Modules - manager</name>
-  <description>parent POM for all oVirt modules</description>
+  <name>KVM Manager Modules - manager</name>
+  <description>parent POM for all KVM Manager modules</description>
 
   <modules>
     <module>extensions-api-root</module>

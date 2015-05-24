@@ -3,9 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.ovirt.engine.core</groupId>
+		<groupId>cn.lynx.emi.kvmmgr.core</groupId>
 		<artifactId>manager-modules</artifactId>
-		<version>3.5.2.1</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>branding</artifactId>
 	<packaging>jar</packaging>
@@ -38,7 +38,7 @@
 
 			<!-- Create the JBoss module: -->
 			<plugin>
-				<groupId>org.ovirt.engine</groupId>
+				<groupId>cn.lynx.emi.kvmmgr</groupId>
 				<artifactId>jboss-modules-maven-plugin</artifactId>
 			</plugin>
 		</plugins>

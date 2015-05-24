@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.ovirt.engine.ui</groupId>
+		<groupId>cn.lynx.emi.kvmmgr.ui</groupId>
 		<artifactId>webadmin-modules</artifactId>
-		<version>3.5.2.1</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>gwt-common</artifactId>
 	<packaging>jar</packaging>
-	<name>oVirt GWT UI common infrastructure</name>
+	<name>KVM Manager GWT UI common infrastructure</name>
 	<dependencies>
 		<!-- Google Web Toolkit dependencies -->
 		<dependency>

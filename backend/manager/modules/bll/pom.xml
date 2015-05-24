@@ -3,9 +3,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.ovirt.engine.core</groupId>
+		<groupId>cn.lynx.emi.kvmmgr.core</groupId>
 		<artifactId>manager-modules</artifactId>
-		<version>3.5.2.1</version>
+		<version>1.0.0</version>
 	</parent>
 
 	<artifactId>bll</artifactId>
@@ -42,12 +42,12 @@
 			<version>${engine.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.ovirt.engine.api</groupId>
-			<artifactId>ovirt-engine-extensions-api</artifactId>
+			<groupId>cn.lynx.emi.kvmmgr.api</groupId>
+			<artifactId>kvmmgr-engine-extensions-api</artifactId>
 			<version>${org.ovirt.engine.api.ovirt-engine-extensions-api.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.ovirt.engine.extensions</groupId>
+			<groupId>cn.lynx.emi.kvmmgr.extensions</groupId>
 			<artifactId>builtin</artifactId>
 			<version>${engine.version}</version>
 		</dependency>

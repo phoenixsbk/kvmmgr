@@ -2,16 +2,16 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.ovirt.engine</groupId>
+    <groupId>cn.lynx.emi.kvmmgr</groupId>
     <artifactId>root</artifactId>
-    <version>3.5.2.1</version>
+    <version>1.0.0</version>
   </parent>
 
   <artifactId>engine-server-ear</artifactId>
   <packaging>ear</packaging>
 
-  <name>oVirt Server EAR</name>
-  <description>oVirt server EAR</description>
+  <name>KVM Manager Server EAR</name>
+  <description>KVM Manager server EAR</description>
 
   <properties>
     <earDirectory>${project.build.directory}/${project.build.finalName}</earDirectory>
@@ -21,7 +21,7 @@
     <!-- Internal Deps -->
     <!-- ** JARs -->
     <dependency>
-      <groupId>org.ovirt.engine.core</groupId>
+      <groupId>cn.lynx.emi.kvmmgr.core</groupId>
       <artifactId>vdsbroker</artifactId>
       <version>${engine.version}</version>
       <type>jar</type>
@@ -29,42 +29,42 @@
 
     <!-- WARS -->
     <dependency>
-      <groupId>org.ovirt.engine.core</groupId>
+      <groupId>cn.lynx.emi.kvmmgr.core</groupId>
       <artifactId>root-war</artifactId>
       <version>${engine.version}</version>
       <type>war</type>
     </dependency>
 
     <dependency>
-      <groupId>org.ovirt.engine.ui</groupId>
+      <groupId>cn.lynx.emi.kvmmgr.ui</groupId>
       <artifactId>userportal</artifactId>
       <version>${engine.version}</version>
       <type>war</type>
     </dependency>
 
     <dependency>
-      <groupId>org.ovirt.engine.ui</groupId>
+      <groupId>cn.lynx.emi.kvmmgr.ui</groupId>
       <artifactId>webadmin</artifactId>
       <version>${engine.version}</version>
       <type>war</type>
     </dependency>
 
     <dependency>
-      <groupId>org.ovirt.engine.core</groupId>
+      <groupId>cn.lynx.emi.kvmmgr.core</groupId>
       <artifactId>services</artifactId>
       <version>${engine.version}</version>
       <type>war</type>
     </dependency>
 
     <dependency>
-      <groupId>org.ovirt.engine.core</groupId>
+      <groupId>cn.lynx.emi.kvmmgr.core</groupId>
       <artifactId>docs</artifactId>
       <version>${engine.version}</version>
       <type>war</type>
     </dependency>
 
     <dependency>
-      <groupId>org.ovirt.engine.core</groupId>
+      <groupId>cn.lynx.emi.kvmmgr.core</groupId>
       <artifactId>welcome</artifactId>
       <version>${engine.version}</version>
       <type>war</type>
@@ -72,14 +72,14 @@
 
     <!-- ** EJB-JARs -->
     <dependency>
-      <groupId>org.ovirt.engine.core</groupId>
+      <groupId>cn.lynx.emi.kvmmgr.core</groupId>
       <artifactId>scheduler</artifactId>
       <version>${engine.version}</version>
       <type>ejb</type>
     </dependency>
 
     <dependency>
-      <groupId>org.ovirt.engine.core</groupId>
+      <groupId>cn.lynx.emi.kvmmgr.core</groupId>
       <artifactId>bll</artifactId>
       <version>${engine.version}</version>
       <type>ejb</type>
@@ -183,56 +183,56 @@
           <modules>
             <!-- ** WARs -->
             <webModule>
-              <groupId>org.ovirt.engine.core</groupId>
+              <groupId>cn.lynx.emi.kvmmgr.core</groupId>
               <artifactId>root-war</artifactId>
               <bundleFileName>root.war</bundleFileName>
               <contextRoot>/</contextRoot>
             </webModule>
 
             <webModule>
-              <groupId>org.ovirt.engine.ui</groupId>
+              <groupId>cn.lynx.emi.kvmmgr.ui</groupId>
               <artifactId>userportal</artifactId>
               <bundleFileName>userportal.war</bundleFileName>
-              <contextRoot>/ovirt-engine/userportal</contextRoot>
+              <contextRoot>/kvmmgr-engine/userportal</contextRoot>
             </webModule>
 
             <webModule>
-              <groupId>org.ovirt.engine.ui</groupId>
+              <groupId>cn.lynx.emi.kvmmgr.ui</groupId>
               <artifactId>webadmin</artifactId>
               <bundleFileName>webadmin.war</bundleFileName>
-              <contextRoot>/ovirt-engine/webadmin</contextRoot>
+              <contextRoot>/kvmmgr-engine/webadmin</contextRoot>
             </webModule>
 
             <webModule>
-              <groupId>org.ovirt.engine.core</groupId>
+              <groupId>cn.lynx.emi.kvmmgr.core</groupId>
               <artifactId>services</artifactId>
               <bundleFileName>services.war</bundleFileName>
-              <contextRoot>/ovirt-engine/services</contextRoot>
+              <contextRoot>/kvmmgr-engine/services</contextRoot>
             </webModule>
 
             <webModule>
-              <groupId>org.ovirt.engine.core</groupId>
+              <groupId>cn.lynx.emi.kvmmgr.core</groupId>
               <artifactId>docs</artifactId>
               <bundleFileName>docs.war</bundleFileName>
-              <contextRoot>/ovirt-engine/docs</contextRoot>
+              <contextRoot>/kvmmgr-engine/docs</contextRoot>
             </webModule>
 
             <webModule>
-              <groupId>org.ovirt.engine.core</groupId>
+              <groupId>cn.lynx.emi.kvmmgr.core</groupId>
               <artifactId>welcome</artifactId>
               <bundleFileName>welcome.war</bundleFileName>
-              <contextRoot>/ovirt-engine</contextRoot>
+              <contextRoot>/kvmmgr-engine</contextRoot>
             </webModule>
 
             <!-- ** EJB-JARs -->
             <ejbModule>
-              <groupId>org.ovirt.engine.core</groupId>
+              <groupId>cn.lynx.emi.kvmmgr.core</groupId>
               <artifactId>scheduler</artifactId>
               <bundleFileName>scheduler.jar</bundleFileName>
             </ejbModule>
 
             <ejbModule>
-              <groupId>org.ovirt.engine.core</groupId>
+              <groupId>cn.lynx.emi.kvmmgr.core</groupId>
               <artifactId>bll</artifactId>
               <bundleFileName>bll.jar</bundleFileName>
             </ejbModule>

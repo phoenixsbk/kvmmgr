@@ -3,14 +3,14 @@ ven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.ovirt.engine.api</groupId>
+    <groupId>cn.lynx.emi.kvmmgr.api</groupId>
     <artifactId>restapi-parent</artifactId>
-    <version>3.5.2.1</version>
+    <version>1.0.0</version>
   </parent>
 
   <artifactId>interface</artifactId>
   <packaging>pom</packaging>
-  <name>oVirt RESTful API interface</name>
+  <name>KVM Manager RESTful API interface</name>
 
   <modules>
     <module>common</module>

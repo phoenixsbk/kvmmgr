@@ -2,15 +2,15 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.ovirt.engine.api</groupId>
+    <groupId>cn.lynx.emi.kvmmgr.api</groupId>
     <artifactId>interface</artifactId>
-    <version>3.5.2.1</version>
+    <version>1.0.0</version>
   </parent>
 
   <artifactId>restapi-definition</artifactId>
   <packaging>jar</packaging>
 
-  <name>oVirt Engine API Definition</name>
+  <name>KVM Manager Engine API Definition</name>
 
   <dependencies>
 
@@ -43,13 +43,13 @@
     </dependency>
 
     <dependency>
-      <groupId>org.ovirt.engine.core</groupId>
+      <groupId>${engine.groupId}</groupId>
       <artifactId>uutils</artifactId>
       <version>${engine.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.ovirt.engine.core</groupId>
+      <groupId>${engine.groupId}</groupId>
       <artifactId>common</artifactId>
       <version>${engine.version}</version>
     </dependency>
@@ -122,7 +122,7 @@
 
       <!-- Create the JBoss module: -->
       <plugin>
-        <groupId>org.ovirt.engine</groupId>
+        <groupId>cn.lynx.emi.kvmmgr</groupId>
         <artifactId>jboss-modules-maven-plugin</artifactId>
       </plugin>
 
