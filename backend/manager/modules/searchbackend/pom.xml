@@ -51,7 +51,7 @@
 
 			<!-- Create the JBoss module: -->
 			<plugin>
-				<groupId>org.ovirt.engine</groupId>
+				<groupId>cn.lynx.emi.kvmmgr</groupId>
 				<artifactId>jboss-modules-maven-plugin</artifactId>
 			</plugin>
 
