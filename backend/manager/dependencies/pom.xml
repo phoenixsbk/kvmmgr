@@ -83,7 +83,7 @@
 
     <dependency>
       <groupId>cn.lynx.emi.kvmmgr.api</groupId>
-      <artifactId>ovirt-engine-extensions-api</artifactId>
+      <artifactId>kvmmgr-engine-extensions-api</artifactId>
       <version>${org.ovirt.engine.api.ovirt-engine-extensions-api.version}</version>
     </dependency>
 
@@ -389,8 +389,8 @@
 
               <module>
                 <groupId>cn.lynx.emi.kvmmgr.api</groupId>
-                <artifactId>ovirt-engine-extensions-api</artifactId>
-                <moduleName>org.ovirt.engine.api.ovirt-engine-extensions-api</moduleName>
+                <artifactId>kvmmgr-engine-extensions-api</artifactId>
+                <moduleName>cn.lynx.emi.kvmmgr.api.kvmmgr-engine-extensions-api</moduleName>
               </module>
 
               <module>
