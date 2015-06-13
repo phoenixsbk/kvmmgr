@@ -68,8 +68,11 @@ public class LicenseService {
 		return -2L;
 	}
 	
-	public final void UpdateLicense(String license) {
-		RSAEngine.storeLicense(license);
-		initialize(true);
+	public final boolean UpdateLicense(String license) {
+		boolean success = RSAEngine.storeLicense(license);
+		if (success)
+			initialize(true);
+		
+		return success;
 	}
 }

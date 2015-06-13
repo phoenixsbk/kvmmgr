@@ -5,7 +5,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -47,8 +46,8 @@ public class RSAEngine {
 		return _encryptByPubKey(sb.toString());
 	}
 	
-	public static final void storeLicense(String license) {
-		_storeFile(LICENSE_CODE_FILE, license);
+	public static final boolean storeLicense(String license) {
+		return _storeFile(LICENSE_CODE_FILE, license);
 	}
 	
 	public static final LicenseBean retrieveLicense() {
