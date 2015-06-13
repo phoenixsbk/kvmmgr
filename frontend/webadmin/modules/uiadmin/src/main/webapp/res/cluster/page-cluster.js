@@ -4,7 +4,7 @@ var CLUSTER_COLUMNS = [{
     type:"string",
     width:"50px"
   },{
-    data : "data_center",
+    data : "data_center.name",
     title:"Data Center",
     type:"string",
     width:"100px"
@@ -24,12 +24,12 @@ var CLUSTER_COLUMNS = [{
     type:"string",
      width:"100px"
   },{
-    data:"hcount",
+    data:"hostcount",
     title:"Host Count",
     type:"numeric",
      width:"100px"
   },{
-    data:"vcount",
+    data:"vmcount",
     title:"VM Count",
     type:"numeric",
      width:"100px"
@@ -138,20 +138,44 @@ $(document)
     		xhr.setRequestHeader("Accept", "application/json");
     	},
     	success: function(data) {
+    		var allclusters = data.cluster;
+    		for (var i in allclusters) {
+    			var cl = allclusters[i];
+    			var dcid = cl.data_center.id;
+    			var dcjson = $.ajax({
+    				type: "GET",
+    				url: "/api/datacenters/" + dcid,
+    				beforeSend: function(xhr) {
+    					xhr.setRequestHeader("Accept", "application/json");
+    				},
+    				async: false
+    			});
+    			cl.data_center.name = dcjson.responseJSON.name;
+    			cl.cpu = "";
+    			cl.hostcount = 0;
+    			cl.vmcount = 0;
+    		}
+    		
     		$("#clustertable").dataTable({
     		    "dom":'<"top"p>rt<"bottom">',
     		    "info":false,
     		    "pageLength" : 7,
-    		    "data": data.clusters,
+    		    "data": allclusters,
     		    "columns": CLUSTER_COLUMNS,
-    		    "bFilter" : false,               
-    		    "bLengthChange": false,
-    		    "oLanguage":{
+    		    "filter" : false,               
+    		    "lengthChange": false,
+    		    "language":{
     		      "oPaginate":{
     		        "sPrevious":"<",
     		        "sNext":">"
     		      }
-    		    }
+    		    },
+    		    "columnDefs":[{
+    		    	"targets": [2],
+    		    	"render": function(data, type, full, meta) {
+    		    		return full.version.major + "." + full.version.minor;
+    		    	}
+    		    }]
     		  });
     	}
      });
