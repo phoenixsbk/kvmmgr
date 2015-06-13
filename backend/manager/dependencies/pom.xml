@@ -388,7 +388,7 @@
               </module>
 
               <module>
-                <groupId>org.ovirt.engine.api</groupId>
+                <groupId>cn.lynx.emi.kvmmgr.api</groupId>
                 <artifactId>ovirt-engine-extensions-api</artifactId>
                 <moduleName>org.ovirt.engine.api.ovirt-engine-extensions-api</moduleName>
               </module>
