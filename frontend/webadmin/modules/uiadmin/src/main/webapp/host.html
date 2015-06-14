@@ -7,16 +7,15 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <!-- Site Properities -->
-<title>Clusters</title>
+<title>Hosts</title>
 <link rel="stylesheet" type="text/css" href="res/semantic.css">
 <script src="res/jquery-2.1.4.min.js"></script>
 <script src="res/jquery.ui.position.js"></script>
 <script src="res/jquery.contextMenu.js"></script>
 <script src="res/semantic.js"></script>
-<script src="res/cluster/page-cluster.js"></script>
+<script src="res/host/page-host.js"></script>
 <link rel="stylesheet" type="text/css" href="res/jquery.dataTables.css">
-<link rel="stylesheet" type="text/css"
-	href="res/cluster/page-cluster.css">
+<link rel="stylesheet" type="text/css" href="res/host/page-host.css">
 <link rel="stylesheet" type="text/css" href="res/jquery.contextMenu.css">
 <script type="text/javascript" src="res/jquery.dataTables.js"></script>
 </head>
@@ -88,9 +87,9 @@
 			<div class="ui vertical pointing menu">
 				<a class="item" href="datacenter.html"> <i class="home icon"></i>Data
 					Centers
-				</a> <a class="item active" href="javascript:;"> <i
+				</a> <a class="item" href="cluster.html"> <i
 					class="grid layout icon"></i>Clusters
-				</a> <a class="item"> <i class="laptop icon"></i>Hosts
+				</a> <a class="item active" href="host.html"> <i class="laptop icon"></i>Hosts
 				</a> <a class="item"> <i class="sitemap icon"></i>NetWotks
 				</a> <a class="item"> <i class="database icon"></i>Storage
 				</a> <a class="item"> <i class="disk outline icon"></i>Disks
@@ -106,7 +105,7 @@
 		<div class="fourteen wide column">
 			<!-- <div class="button demo"> -->
 			<div class="table_container">
-				<div class="ui basic button" id="newclusterbutton">
+				<div class="ui basic button">
 					<i class="plus icon"></i>New
 				</div>
 				<div class="ui basic button">
@@ -119,63 +118,9 @@
 					<i class="info circle icon"></i>Guide Me
 				</div>
 				<!-- </div> -->
-				<table id="clustertable" class="display" cellspacing="0"
-					width="100%">
+				<table id="hosttable" class="display" cellspacing="0" width="100%">
 				</table>
 			</div>
-			<div class="ui top attached tabular menu">
-				<a class="item" data-tab="general">General</a> <a
-					class="item active" data-tab="net">Logical Networks</a> <a
-					class="item" data-tab="host">Hosts</a> <a class="item"
-					data-tab="vms">Virtual Machines</a> <a class="item"
-					data-tab="group">Affinity Groups</a> <a class="item" data-tab="cpu">CPU
-					Profiles</a> <a class="item" data-tab="perm">Permissions</a>
-			</div>
-			<div class="ui bottom attached tab segment" data-tab="general">
-				<div class="table_container">
-					<div class="ui basic button">
-						</i>Attach Data
-					</div>
-					<div class="ui basic button">
-						</i>Attach ISO
-					</div>
-					<div class="ui basic button">
-						</i>Attach Export
-					</div>
-					<div class="ui basic button">
-						</i>Detach
-					</div>
-					<div class="ui basic button">
-						</i>Activate
-					</div>
-					<div class="ui basic button">
-						</i>Maintenance
-					</div>
-					<!-- </div> -->
-					<table id="storetable" class="display" cellspacing="0" width="100%">
-					</table>
-				</div>
-			</div>
-			<div class="ui bottom attached active tab segment" data-tab="net">
-				<div class="table_container">
-					<div class="ui basic button">Add Network</div>
-					<div class="ui basic button">Manage Network</div>
-					<div class="ui basic button">Set as Display</div>
-					<!-- </div> -->
-					<table id="nettable" class="display" cellspacing="0" width="100%">
-					</table>
-				</div>
-			</div>
-			<div class="ui bottom attached tab segment" data-tab="host">
-				Third</div>
-			<div class="ui bottom attached tab segment" data-tab="vms">
-				Third</div>
-			<div class="ui bottom attached tab segment" data-tab="group">
-				Third</div>
-			<div class="ui bottom attached tab segment" data-tab="cpu">
-				Third</div>
-			<div class="ui bottom attached tab segment" data-tab="perm">
-				Third</div>
 		</div>
 	</div>
 	<div class="mgnet ui modal">
@@ -190,7 +135,7 @@
 			<div class="ui basicv button">Cancel</div>
 		</div>
 	</div>
-	<div class="newcluster ui modal" id="newclustermodal">
+	<div class="newcluster ui modal">
 		<i class="close icon"></i>
 		<div class="header">New Cluster</div>
 		<div id="modalwin" class="content">

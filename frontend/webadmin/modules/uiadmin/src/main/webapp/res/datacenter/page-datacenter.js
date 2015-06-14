@@ -102,8 +102,7 @@ function loadDatacenters() {
 /*
  * Document ready function
  */
-$(document)
-  .ready(function(){
+$(document).ready(function(){
     $('.ui.dropdown').dropdown()
     $('.ui.menu .dropdown').dropdown({
         on: 'hover'
@@ -111,9 +110,12 @@ $(document)
     $('.right.menu .dropdown').dropdown({
     	on:'hover'
     });
+    $("#newdcbutton").on("click", function() {
+    	$("#newdcmodal").modal('show');
+    });
 
     // $('.page.ui.modal').modal('show');
-    $('.new.ui.modal').modal('show');
+    
     // $('.newnet.ui.modal').modal('show');
     // $('.newuser.ui.modal').modal('show');
     // $('.attachiso.ui.modal').modal('show');
