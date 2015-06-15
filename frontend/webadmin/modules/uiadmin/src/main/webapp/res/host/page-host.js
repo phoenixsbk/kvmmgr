@@ -69,12 +69,15 @@ $(document)
         on: 'hover'
       });
     $('.right.menu .dropdown').dropdown({on:'hover'});
+    
+    $("#newhostbutton").on("click", function() {
+    	$("#newhostmodal").modal("show");
+    });
 
     // $('.page.ui.modal').modal('show');
     // $('.mgnet.ui.modal').modal('show');
     // $('.newcluster.ui.modal').modal('show');
     // $('.cpuprofile.ui.modal').modal('show');
-    $('.vmiprofile.ui.modal').modal('show');
     $dropdownItem = $('.menu .dropdown .item'),
     $menuItem     = $('.menu a.item').not($dropdownItem),
     $('.ui.checkbox').checkbox();

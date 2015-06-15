@@ -7,17 +7,17 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <!-- Site Properities -->
-<title>Hosts</title>
+<title>Network</title>
 <link rel="stylesheet" type="text/css" href="res/semantic.css">
 <script src="res/jquery-2.1.4.min.js"></script>
 <script src="res/jquery.ui.position.js"></script>
 <script src="res/jquery.contextMenu.js"></script>
 <script src="res/semantic.js"></script>
-<script src="res/host/page-host.js"></script>
 <link rel="stylesheet" type="text/css" href="res/jquery.dataTables.css">
-<link rel="stylesheet" type="text/css" href="res/host/page-host.css">
+<link rel="stylesheet" type="text/css" href="res/network/network.css">
 <link rel="stylesheet" type="text/css" href="res/jquery.contextMenu.css">
 <script type="text/javascript" src="res/jquery.dataTables.js"></script>
+<script src="res/network/network.js"></script>
 </head>
 <body id="page">
 	<div class="ui menu">
@@ -85,12 +85,10 @@
 		<div class="two wide column" style="padding-right: 0px">
 			<!--   System>Data Centers>Default>Storage -->
 			<div class="ui vertical pointing menu">
-				<a class="item" href="datacenter.html"> <i class="home icon"></i>Data
-					Centers
-				</a> <a class="item" href="cluster.html"> <i
-					class="grid layout icon"></i>Clusters
-				</a> <a class="item active" href="host.html"> <i class="laptop icon"></i>Hosts
-				</a> <a class="item"> <i class="sitemap icon"></i>NetWotks
+				<a class="item" href="datacenter.html"> <i class="home icon"></i>Data Centers
+				</a> <a class="item" href="cluster.html"> <i class="grid layout icon"></i>Clusters
+				</a> <a class="item" href="host.html"> <i class="laptop icon"></i>Hosts
+				</a> <a class="item active" href="network.html"> <i class="sitemap icon"></i>NetWotks
 				</a> <a class="item"> <i class="database icon"></i>Storage
 				</a> <a class="item"> <i class="disk outline icon"></i>Disks
 				</a> <a class="item"> <i class="desktop icon"></i>Virtual Machines
@@ -105,7 +103,7 @@
 		<div class="fourteen wide column">
 			<!-- <div class="button demo"> -->
 			<div class="table_container">
-				<div class="ui basic button" id="newhostbutton">
+				<div class="ui basic button" id="newnetbutton">
 					<i class="plus icon"></i>New
 				</div>
 				<div class="ui basic button">
@@ -115,97 +113,239 @@
 					<i class="remove icon"></i>Remove
 				</div>
 				<div class="ui basic button">
+					<i class="remove circle icon"></i>Force Remove
+				</div>
+				<div class="ui basic button">
 					<i class="info circle icon"></i>Guide Me
 				</div>
 				<!-- </div> -->
-				<table id="hosttable" class="display" cellspacing="0" width="100%">
+				<table id="networktable" class="display" cellspacing="0" width="100%">
 				</table>
 			</div>
+			<div class="ui top attached tabular menu">
+				<a class="item" data-tab="storage">Storage</a> <a class="item"
+					data-tab="net">Logical Networks</a> <a class="item" data-tab="qos">QoS</a>
+				<a class="item" data-tab="clust">Clusters</a> <a class="item active"
+					data-tab="perm">Permissions</a> <a class="item" data-tab="event">Events</a>
+			</div>
+			<div class="ui bottom attached tab segment" data-tab="storage">
+				<div class="table_container">
+					<div class="ui basic button">
+						</i>Attach Data
+					</div>
+					<div class="ui basic button">
+						</i>Attach ISO
+					</div>
+					<div class="ui basic button">
+						</i>Attach Export
+					</div>
+					<div class="ui basic button">
+						</i>Detach
+					</div>
+					<div class="ui basic button">
+						</i>Activate
+					</div>
+					<div class="ui basic button">
+						</i>Maintenance
+					</div>
+					<!-- </div> -->
+					<table id="storetable" class="display" cellspacing="0" width="100%">
+					</table>
+				</div>
+			</div>
+			<div class="ui bottom attached tab segment" data-tab="net">
+				<div class="table_container">
+					<div class="ui basic button">
+						</i>New
+					</div>
+					<div class="ui basic button">
+						</i>Edit
+					</div>
+					<div class="ui basic button">
+						</i>Remove
+					</div>
+					<!-- </div> -->
+					<table id="nettable" class="display" cellspacing="0" width="100%">
+					</table>
+				</div>
+			</div>
+			<div class="ui bottom attached tab segment" data-tab="qos"></div>
+			<div class="ui bottom attached tab segment" data-tab="clust">
+				Third</div>
+			<div class="ui bottom attached active tab segment" data-tab="perm">
+				<div class="table_container">
+					<div class="ui basic button">
+						</i>Add
+					</div>
+					<div class="ui basic button">
+						</i>Remove
+					</div>
+					<!-- </div> -->
+					<table id="permtable" class="display" cellspacing="0" width="100%">
+					</table>
+				</div>
+			</div>
+			<div class="ui bottom attached tab segment" data-tab="event">
+				Third</div>
 		</div>
 	</div>
-	<div class="mgnet ui modal">
+	<div class="new ui modal">
 		<i class="close icon"></i>
-		<div class="header">Manage NetWorks</div>
+		<div class="header">New Data Center</div>
 		<div div="newmodal" class="content">
-			<table id="mgnettable" class="display" cellspacing="0" width="100%">
-			</table>
+			<div class="ui form">
+				<div class="fields">
+					<div class="seven wide field name">Name</div>
+					<div class="nine wide field value">
+						<input type="text" placeholder="Name Input">
+					</div>
+				</div>
+				<div class="fields">
+					<div class="seven wide field name">Description</div>
+					<div class="nine wide field value">
+						<input type="text" placeholder="Description">
+					</div>
+				</div>
+				<div class="fields">
+					<div class="seven wide field name">Storage Type</div>
+					<div class="nine wide field value">
+						<div class="ui selection dropdown" tabindex="0">
+							<select>
+								<option value="1" selected="">Shared</option>
+								<option value="2">Shared</option>
+							</select> <i class="dropdown icon"></i>
+							<div class="text">Shared</div>
+							<div class="menu" tabindex="-1">
+								<div class="item active selected" data-value="1">Shared</div>
+								<div class="item" data-value="2">Shared</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="fields">
+					<div class="seven wide field name">Compatibility Version</div>
+					<div class="nine wide field value">
+						<div class="ui selection dropdown" tabindex="0">
+							<select>
+								<option value="1" selected="">3.5</option>
+								<option value="2">3.4</option>
+								<option value="3">3.1</option>
+								<option value="4">3.2</option>
+								<option value="5">3.3</option>
+							</select> <i class="dropdown icon"></i>
+							<div class="text">3.5</div>
+							<div class="menu" tabindex="-1">
+								<div class="item active selected" data-value="1">3.5</div>
+								<div class="item" data-value="2">3.4</div>
+								<div class="item" data-value="3">3.1</div>
+								<div class="item" data-value="4">3.2</div>
+								<div class="item" data-value="5">3.3</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="fields">
+					<div class="seven wide field name">Quota Mode</div>
+					<div class="nine wide field value">
+						<div class="ui selection dropdown" tabindex="0">
+							<select>
+								<option value="1" selected="">Disable</option>
+								<option value="2">Enable</option>
+							</select> <i class="dropdown icon"></i>
+							<div class="text">Disable</div>
+							<div class="menu" tabindex="-1">
+								<div class="item active selected" data-value="1">Disable</div>
+								<div class="item" data-value="2">Enable</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="fields">
+					<div class="seven wide field name">Comment</div>
+					<div class="nine wide field value">
+						<input type="text" placeholder="Comment">
+					</div>
+				</div>
+			</div>
 		</div>
 		<div id="modalbottom" class="actions">
 			<div class="ui primary button">Ok</div>
 			<div class="ui basicv button">Cancel</div>
 		</div>
 	</div>
-	<div class="newcluster ui modal">
+	<div class="newnet ui modal">
 		<i class="close icon"></i>
-		<div class="header">New Cluster</div>
+		<div class="header">New Logical Network</div>
 		<div id="modalwin" class="content">
 			<div class="ui grid">
 				<div class="three wide column left-panel">
 					<div class="ui vertical pointing menu">
-						<a class="item active">General</a> <a class="item">Optimization</a>
-						<a class="item">Cluster Policy</a> <a class="item">Console</a> <a
-							class="item">Fencing Policy</a>
+						<a class="item active">General</a> <a class="item">Cluster</a> <a
+							class="item">vNIC Profiles</a>
 					</div>
 				</div>
 				<div class="seven wide column">
 					<div class="ui form">
+						<h3 class="ui dividing header">Export</h3>
+						<div class="ui checkbox">
+							<input type="checkbox"> <label>Create on external
+								provider</label>
+						</div>
 						<div class="fields">
-							<div class="six wide field name">Data Center:</div>
+							<div class="six wide field name">External Provider:</div>
 							<div class="ten wide field value">
 								<select class="ui selection dropdown">
-									<option value="1">Default</option>
+									<option value="1">Amazon</option>
 									<option value="2">Google</option>
-									<option value="3">Amazon</option>
 								</select>
 							</div>
 						</div>
 						<div class="fields">
-							<div class="six wide field name">Name:</div>
+							<div class="six wide field name">Physical Network:</div>
 							<div class="ten wide field value">
 								<input type="text">
 							</div>
 						</div>
+					</div>
+					<div class="ui form">
+						<h3 class="ui dividing header">Network Parameters</h3>
 						<div class="fields">
-							<div class="six wide field name">Description:</div>
-							<div class="ten wide field value">
+							<div class="eight wide field name">Network Label:</div>
+							<div class="eight wide field value">
 								<input type="text">
 							</div>
 						</div>
 						<div class="fields">
-							<div class="six wide field name">Comment:</div>
-							<div class="ten wide field value">
+							<div class="eight wide field name">
+								<div class="ui checkbox">
+									<input type="checkbox"> <label>Enable VLAN
+										tagging</label>
+								</div>
+							</div>
+							<div class="eight wide field value">
 								<input type="text">
 							</div>
 						</div>
 						<div class="fields">
-							<div class="six wide field name">CPU Type:</div>
-							<div class="ten wide field value">
-								<select class="ui selection dropdown">
-									<option value="1">Intel Conroe Familu</option>
-									<option value="2">Intel Penryn Family</option>
-									<option value="3">AMD Opteron G1</option>
-									<option value="4">IBM POWER 8</option>
-								</select>
+							<div class="six wide field">
+								<div class="ui checkbox">
+									<input type="checkbox"> <label>VM network</label>
+								</div>
 							</div>
-						</div>
-						<div class="fields">
-							<div class="six wide field name">Compatibility Version</div>
-							<div class="ten wide field value">
-								<select class="ui selection dropdown">
-									<option value="1">3.5</option>
-									<option value="2">3.4</option>
-									<option value="3">3.2</option>
-									<option value="4">3.1</option>
-								</select>
-							</div>
-						</div>
-						<div class="fields">
-							<div class="six wide field name">CPU Architecture</div>
-							<div class="ten wide field value">
-								<select class="ui selection dropdown">
-									<option value="1">x86_64</option>
-									<option value="2">ppc64</option>
-								</select>
+							<div class="ten wide field grouped fields">
+								<label>MTU</label>
+								<div class="field">
+									<div class="ui radio checkbox">
+										<input type="radio" checked="checked" name="default">
+										<label>Default(1500)</label>
+									</div>
+								</div>
+								<div class="inline field">
+									<div class="ui radio checkbox">
+										<input type="radio" name="custom"> <label>Custom</label>
+									</div>
+									<input type="text">
+								</div>
 							</div>
 						</div>
 					</div>
@@ -213,27 +353,22 @@
 				<div class="six wide column right-panel">
 					<div class="ui form">
 						<div class="fields">
-							<div class="ui checkbox">
-								<label>Enable Virt Service</label> <input type="checkbox">
+							<div class="seven wide field name">Name</div>
+							<div class="nine wide field value">
+								<input type="text" placeholder="Name Input">
 							</div>
 						</div>
 						<div class="fields">
-							<div class="ui checkbox">
-								<label>Enable Gluster Service</label> <input type="checkbox">
+							<div class="seven wide field name">Description</div>
+							<div class="nine wide field value">
+								<input type="text" placeholder="Description">
 							</div>
 						</div>
 						<div class="fields">
-							<div class="ui checkbox">
-								<input type="checkbox"> <label>Enable To Set vm
-									Maintenance reason</label>
+							<div class="seven wide field name">Comment</div>
+							<div class="nine wide field value">
+								<input type="text" placeholder="Comment">
 							</div>
-						</div>
-						<h3>Required Random Number Generator sources:</h3>
-						<div class="ui checkbox">
-							<input type="checkbox"> <label>/dev/random source</label>
-						</div>
-						<div class="ui checkbox">
-							<input type="checkbox"> <label>/dev/hwrng source</label>
 						</div>
 					</div>
 				</div>
@@ -246,129 +381,60 @@
 			<div class="ui basicv button">Cancel</div>
 		</div>
 	</div>
-	<div class="cpuprofile ui modal">
+	<div class="newuser ui modal">
 		<i class="close icon"></i>
-		<div class="header">CPU Profile</div>
-		<div id="newmodal" class="content">
+		<div class="header">Add Permission to User</div>
+		<div id="modalwin" class="content">
 			<div class="ui form">
-				<div class="fields">
-					<div class="six wide field name">Cluster</div>
-					<div class="ten wide field value">
-						<select class="ui selection dropdown">
-							<option value="1">Default</option>
-							<option value="2">Google</option>
-							<option value="3">Amazon</option>
-						</select>
+				<div class="grouped inline fields">
+					<div class="field">
+						<div class="ui radio checkbox">
+							<input type="radio" checked="checked" name="fruit"> <label>Specufic
+								Usre/Group</label>
+						</div>
 					</div>
-				</div>
-				<div class="fields">
-					<div class="six wide field name">Name</div>
-					<div class="ten wide field value">
-						<input type="text" />
-					</div>
-				</div>
-				<div class="fields">
-					<div class="six wide field name">Description</div>
-					<div class="ten wide field value">
-						<input type="text" />
-					</div>
-				</div>
-				<div class="fields">
-					<div class="six wide field name">QoS</div>
-					<div class="ten wide field value">
-						<select class="ui selection dropdown">
-							<option value="1">[Unlimited]</option>
-							<option value="2"><1000ms</option>
-							<option value="3"><2000ms</option>
-						</select>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="modalbottom" class="actions">
-			<div class="ui primary button">Ok</div>
-			<div class="ui basicv button">Cancel</div>
-		</div>
-	</div>
-
-	<div class="vmiprofile ui modal">
-		<i class="close icon"></i>
-		<div class="header">VM Interface Profile</div>
-		<div id="newmodal" class="content">
-			<div class="ui form">
-				<div class="fields">
-					<div class="six wide field name">Network</div>
-					<div class="ten wide field value">
-						<select class="ui selection dropdown">
-							<option value="1">mgmt</option>
-							<option value="2">mgmt1</option>
-							<option value="3">mgmt2</option>
-						</select>
-					</div>
-				</div>
-				<div class="fields">
-					<div class="six wide field name">Name</div>
-					<div class="ten wide field value">
-						<input type="text" />
-					</div>
-				</div>
-				<div class="fields">
-					<div class="six wide field name">Description</div>
-					<div class="ten wide field value">
-						<input type="text" />
-					</div>
-				</div>
-				<div class="fields">
-					<div class="six wide field name">QoS</div>
-					<div class="ten wide field value">
-						<select class="ui selection dropdown">
-							<option value="1">[Unlimited]</option>
-							<option value="2"><1000ms</option>
-							<option value="3"><2000ms</option>
-						</select>
-					</div>
-				</div>
-				<div class="fields">
-					<div class="six wide field name">Port Mirroring</div>
-					<div class="ten wide field value">
-						<input type="checkbox" />
-					</div>
-				</div>
-				<div class="fields">
-					<div class="ten wide field name">
-						<select class="ui selection dropdown">
-							<option value="">Please select a key...</option>
-							<option value="1">96dadajkdns</option>
-							<option value="2">j92ji99asndjisan</option>
-							<option value="3">jsydabsdcja8</option>
-						</select>
-					</div>
-					<div class="six wide field value">
-						<div class="ui ignored ignored icon buttons">
-							<div class="ui show button">
-								<i class="plus icon"></i>
-							</div>
-							<div class="ui hide button">
-								<i class="minus icon"></i>
-							</div>
+					<div class="field">
+						<div class="ui radio checkbox">
+							<input type="radio" name="fruit"> <label>Everyone</label>
 						</div>
 					</div>
 				</div>
-				<div class="ui checkbox">
-					<input type="checkbox" name="terms" checked=""><label>Allow
-						all users to use the Profile</label>
+				<div class="sixteen wide column">
+					<div class="three fields">
+						<div class="inline field">
+							<label>Search</label> <select class="ui selection dropdown">
+								<option value="1">internal</option>
+								<option value="2">external</option>
+							</select>
+						</div>
+						<div class="inline field">
+							<label>Namespace</label> <select class="ui selection dropdown">
+								<option value="1">*</option>
+								<option value="2">/vms</option>
+								<option value="3">/datacenter</option>
+								<option value="4">/network</option>
+							</select>
+						</div>
+						<div class="inline field">
+							<input type="text" placeholder="Text Input">
+							<div class="ui basic button">GO</div>
+						</div>
+					</div>
+				</div>
+				<div class="sixteen wide column">
+					<table id="usertable" class="display" cellspacing="0" width="100%">
+					</table>
 				</div>
 			</div>
 		</div>
 		<div id="modalbottom" class="actions">
-			<div class="ui primary button">Ok</div>
+			<div class="ui primary button">Submit</div>
 			<div class="ui basicv button">Cancel</div>
 		</div>
 	</div>
-
-	<div class="page ui modal" id="newhostmodal">
+	<div class="page ui modal">
 		<i class="close icon"></i>
-		<div class="header">New Host</div>
+		<div class="header">New Virtual Machine</div>
 		<div id="modalwin" class="content">
 			<div class="ui grid">
 				<div class="three wide column left-panel">
@@ -501,6 +567,18 @@
 			<div class="ui teal button" style="float: left;">Hide Advanced
 				Options</div>
 			<div class="ui primary button">Submit</div>
+			<div class="ui basicv button">Cancel</div>
+		</div>
+	</div>
+	<div class="attachiso ui modal">
+		<i class="close icon"></i>
+		<div class="header">Attach ISO Library</div>
+		<div div="newmodal" class="content">
+			<table id="isotable" class="display" cellspacing="0" width="100%">
+			</table>
+		</div>
+		<div id="modalbottom" class="actions">
+			<div class="ui primary button">Ok</div>
 			<div class="ui basicv button">Cancel</div>
 		</div>
 	</div>
