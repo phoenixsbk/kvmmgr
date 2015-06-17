@@ -1,49 +1,44 @@
-var MENU_NAME = "storagehref";
+var MENU_NAME = "networkshref";
 
-var STORAGE_COLUMNS = [ {
+var NETWORK_COLUMNS = [ {
 	data : "name",
-	title : "Domain Name",
+	title : "Name",
 	type : "string",
 	width : "100px"
 }, {
-	data : "type",
-	title : "Domain Type",
-	type : "string",
-	width : "100px"
-}, {
-	data : "storage.type",
-	title : "Storage Type",
-	type : "string",
-	width : "200px"
-}, {
-	data : "storage_format",
-	title : "Format",
-	type : "string",
-	width : "100px"
-}, {
-	data : "cross_dc_status",
-	title : "Cross Datacenter Status",
-	type : "string",
-	width : "50px"
-}, {
-	data : "total_space",
-	title : "Total Space",
-	type : "string",
-	width : "100px"
-}, {
-	data : "free_space",
-	title : "Free Space",
+	data : "dcname",
+	title : "Datacenter",
 	type : "string",
 	width : "100px"
 }, {
 	data : "description",
 	title : "Description",
 	type : "string",
+	width : "200px"
+}, {
+	data : "usages.usage",
+	title : "Role",
+	type : "string",
+	width : "100px"
+}, {
+	data : "vlantag",
+	title : "VLan Tag",
+	type : "string",
+	width : "50px"
+}, {
+	data : "label",
+	title : "Label",
+	type : "string",
+	width : "100px"
+}, {
+	data : "provider",
+	title : "Provider",
+	type : "string",
 	width : "100px"
 } ];
 $(function() {
 	$.contextMenu({
-		selector : '#storagetable td',
+		selector : '#networktable td',
 		build : function($trigger, e) {
 			// this callback is executed every time the menu is to be shown
 			// its results are destroyed every time the menu is hidden
@@ -93,8 +88,8 @@ $(document).ready(
 			$('.right.menu .dropdown').dropdown({
 				on : 'hover'
 			});
-			$("#newstoragebutton").on("click", function() {
-				$("newstoragemodal").modal("show");
+			$("#newnetbutton").on("click", function() {
+				$("newnetmodal").modal("show");
 			});
 
 			// $('.page.ui.modal').modal('show');
@@ -123,18 +118,32 @@ $(document).ready(
 
 			$.ajax({
 				type : "GET",
-				url : "/api/storagedomains",
+				url : "/api/networks",
 				beforeSend : function(xhr) {
 					xhr.setRequestHeader("Accept", "application/json");
 				},
 				success : function(data) {
-					var alldisks = data.storage_domain;
-					$("#storagetable").dataTable({
+					var allnets = data.network;
+					for (var i in allnets) {
+						var n = allnets[i];
+						var dcid = n.data_center.id;
+						var dcname = $.ajax({
+							type : "GET",
+							url : "/api/datacenters/" + dcid,
+							beforeSend : function(xhr) {
+								xhr.setRequestHeader("Accept", "application/json")
+							},
+							async : false
+						});
+						dcname = dcname.responseJSON.name;
+						n.dcname = dcname;
+					}
+					$("#networktable").dataTable({
 						"dom" : '<"top"p>rt<"bottom">',
 						"info" : false,
 						"pageLength" : 10,
-						"data" : alldisks,
-						"columns" : STORAGE_COLUMNS,
+						"data" : allnets,
+						"columns" : NETWORK_COLUMNS,
 						"filter" : false,
 						"lengthChange" : false,
 						"language" : {

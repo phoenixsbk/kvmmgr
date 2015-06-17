@@ -1,49 +1,69 @@
-var MENU_NAME = "storagehref";
+var MENU_NAME = "vmshref";
 
-var STORAGE_COLUMNS = [ {
+var VM_COLUMNS = [ {
 	data : "name",
-	title : "Domain Name",
+	title : "Name",
 	type : "string",
 	width : "100px"
 }, {
-	data : "type",
-	title : "Domain Type",
+	data : "placement_policy.host.id",
+	title : "Host",
 	type : "string",
 	width : "100px"
 }, {
-	data : "storage.type",
-	title : "Storage Type",
+	data : "ip",
+	title : "IP Address",
 	type : "string",
 	width : "200px"
 }, {
-	data : "storage_format",
-	title : "Format",
+	data : "fqdn",
+	title : "FQDN",
 	type : "string",
 	width : "100px"
 }, {
-	data : "cross_dc_status",
-	title : "Cross Datacenter Status",
+	data : "cluster.id",
+	title : "Cluster",
 	type : "string",
 	width : "50px"
 }, {
-	data : "total_space",
-	title : "Total Space",
+	data : "dc",
+	title : "Data Center",
 	type : "string",
 	width : "100px"
 }, {
-	data : "free_space",
-	title : "Free Space",
+	data : "mem",
+	title : "Memory",
 	type : "string",
 	width : "100px"
 }, {
-	data : "description",
-	title : "Description",
+	data : "cpu",
+	title : "CPU",
+	type : "string",
+	width : "100px"
+}, {
+	data : "network",
+	title : "Network",
+	type : "string",
+	width : "100px"
+}, {
+	data : "migration",
+	title : "Migration",
+	type : "string",
+	width : "100px"
+}, {
+	data : "display",
+	title : "Display",
+	type : "string",
+	width : "100px"
+}, {
+	data : "status",
+	title : "Status",
 	type : "string",
 	width : "100px"
 } ];
 $(function() {
 	$.contextMenu({
-		selector : '#storagetable td',
+		selector : '#vmstable td',
 		build : function($trigger, e) {
 			// this callback is executed every time the menu is to be shown
 			// its results are destroyed every time the menu is hidden
@@ -123,18 +143,18 @@ $(document).ready(
 
 			$.ajax({
 				type : "GET",
-				url : "/api/storagedomains",
+				url : "/api/vms",
 				beforeSend : function(xhr) {
 					xhr.setRequestHeader("Accept", "application/json");
 				},
 				success : function(data) {
-					var alldisks = data.storage_domain;
-					$("#storagetable").dataTable({
+					var allvms = data.vm;
+					$("#vmstable").dataTable({
 						"dom" : '<"top"p>rt<"bottom">',
 						"info" : false,
 						"pageLength" : 10,
-						"data" : alldisks,
-						"columns" : STORAGE_COLUMNS,
+						"data" : allvms,
+						"columns" : VM_COLUMNS,
 						"filter" : false,
 						"lengthChange" : false,
 						"language" : {
@@ -144,7 +164,7 @@ $(document).ready(
 							}
 						},
 						"columnDefs" : [{
-							"targets" : [4, 5, 6],
+							"targets" : [4, 5, 6,7,8,9],
 							"render" : function(data, x, full, meta) {
 								return "";
 							}
