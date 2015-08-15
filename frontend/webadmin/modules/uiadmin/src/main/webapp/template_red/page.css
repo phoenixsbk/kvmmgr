@@ -1,16 +1,3 @@
-.ui.grid,.ui.vertical.pointing.menu ,.ui.bottom.attached.tab.segment.active,.ui.active.tab.segment ,.ui.form{
-    background-color: #FFC1C1;
-}
-div#newmodal,div#modalwin,div#isomodal{
-    background-color: #FFC1C1;
-}
-.ui.menu{
-    background-color: #F38B8B;
-}
-div#modalbottom {
-    background-color: #F38B8B;
-}
-
 .container-fluid{
 	margin-left: 0px;
 }

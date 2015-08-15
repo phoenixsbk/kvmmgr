@@ -1,0 +1,26 @@
+body {
+        font-family: Verdana,Arial,Helvetica,sans-serif;
+        margin: 0;
+        background-color:#FFC1C1;
+    }
+    .ui.grid{
+        margin:0;
+    }
+    .header-row1{
+        height:100px;
+    }
+    .login-header {
+        background-color: #F38B8B;
+        height: 160px;
+    }
+ 
+    .ui.white {
+      color: #000;;
+    }
+    .text-center{
+        text-align:center;
+    }
+ 
+    .ui.login-div{
+        margin:30px 0 0 0;
+    }

@@ -1,0 +1,153 @@
+.ui.grid,.ui.vertical.pointing.menu ,.ui.bottom.attached.tab.segment.active,.ui.active.tab.segment ,.ui.form{
+    background-color: #FFC1C1;
+}
+div#newmodal,div#modalwin,div#isomodal{
+    background-color: #FFC1C1;
+}
+.ui.menu{
+    background-color: #F38B8B;
+}
+div#modalbottom {
+    background-color: #F38B8B;
+}
+a.item.active {
+    background-color: white !important;
+}
+.ui.vertical.pointing.menu .active.item:after {
+    background-color: white;
+    border-right: 1px solid;
+    border-top: 1px solid;
+    border-color:white;
+}
+body#page {
+    background-color: #FFC9C9 !important;
+}
+.left-column {
+  float: left;
+  width: 20%;
+}
+.ui.vertical.menu {
+  width: 100%;
+}
+th, td { white-space: nowrap; }
+.right-column {
+  float: left;
+  width: 80%;
+}
+span.barnum {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+.ui.small.orange.progress{
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+div.dataTables_wrapper {
+  width: 100%;
+  /* margin: 0 auto; */
+  clear: none;
+  /*z-index: -1;*/
+}
+.fourteen.wide.column {
+  border-left: 1px solid;
+  height:100%;
+ }
+.three.wide.column.left-panel {
+  padding-top: 0px;
+  padding-left: 1px;
+}
+
+.thirteen.wide.column.right-panel {
+  border: none;
+}
+#modalwin .fields {
+  height: 44px;
+}
+#modalwin .six.wide.column.right-panel {
+  background-color: #FFC1C1;
+  height: 456px;
+}
+#modalwin .wide.field.name {
+  font-size: 15px;
+  padding-top: 6px;
+  font-weight: bold;
+}
+.eight.wide.field.name {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.seven.wide.field.name {
+  font-size: 14px;
+}
+.ui.grid.bottom {
+  border-top: 2px solid;
+  margin-top: 5px;
+}
+.table_container .ui.basic.button {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+.content {
+  height: 450px;
+  padding: 1em 1em 0em 1em;
+}
+div#modalbottom, div#warnmodal {
+  padding: 1em 0em 1em 0em;
+}
+#modalwin .ui.checkbox {
+  padding-right: 10px;
+}
+.pick.fields {
+  padding-top: 10px;
+  border-top: 1px solid;
+}
+
+.table_container .ui.button{
+	padding-left: 2px;
+	padding-right: 2px;
+	/*float: left;*/
+}
+.ui.active.progress .bar{
+	min-width: 0px;
+}
+i.server.list.icon {
+  transform: rotate(180deg);
+}
+.new.ui.modal {
+  width: 600px;
+  margin-left: -300px;
+}
+
+.attachiso.ui.modal {
+  width: 600px;
+  margin-left: -300px;
+}
+
+.attachiso.ui .content {
+  height: 300px;
+}
+
+.fields{
+  margin-bottom: 10px;
+}
+.three.wide.column.left-panel {
+    height: 470px;
+}
+.left-panel .ui.vertical.menu {
+  height: 100%;
+}
+
+#modalwin .ui.form {
+  margin-bottom: 20px;
+}
+.newnet.ui .content {
+  height: 400px;
+  padding: 1em 1em 0em 1em;
+}
+.newuser.ui .content {
+  height: 300px;
+  padding: 1em 1em 0em 1em;
+}
