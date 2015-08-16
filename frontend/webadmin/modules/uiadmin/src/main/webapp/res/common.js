@@ -20,8 +20,4 @@ $(document).ready(function() {
 			});
 		}
 	});
-	
-	$("#topmenucontainer").load("top.html", function() {
-		
-	});
 });
