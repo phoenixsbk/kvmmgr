@@ -4,15 +4,15 @@
 <!-- Standard Meta -->
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <!-- Site Properities -->
-<title>Virtual Machines - Semantic</title>
+<title>KVM Manager Login</title>
+<link rel="stylesheet" type="text/css" href="res/common.css">
 <link rel="stylesheet" type="text/css" href="res/semantic.css">
-<script src="res/jquery-2.1.4.min.js"></script>
-<script src="res/semantic.min.js"></script>
 <link rel="stylesheet" type="text/css" href="res/login.css">
-<script src="res/login.js"></script>
+<script type="text/javascript" src="res/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="res/semantic.js"></script>
+<script type="text/javascript" src="res/login.js"></script>
 </head>
 <body id="page">
 	<div class="ui login-header">
@@ -20,7 +20,7 @@
 			<div class="row header-row1"></div>
 			<div class="row text-center">
 				<h1 class="ui header white">
-					<i class="settings icon"></i> VIRTUALIZATION MANAGER
+					<i class="settings icon"></i> KVM MANAGER
 				</h1>
 			</div>
 		</div>
@@ -33,21 +33,19 @@
 					<label>Portals</label>
 					<div class="field">
 						<div class="ui radio checkbox">
-							<input type="radio" checked="checked" name="fruit"> <label>User
-								Portal</label>
+							<input type="radio" name="loginType" readonly="true"> <label>User Portal</label>
 						</div>
 					</div>
 					<div class="field">
 						<div class="ui radio checkbox">
-							<input type="radio" name="fruit"> <label>Administration
-								Portal</label>
+							<input type="radio" name="loginType" checked="true" readonly="true"> <label>Administration Portal</label>
 						</div>
 					</div>
 				</div>
 				<div class="field">
-					<label class="">User Name</label>
+					<label class="">Username: </label>
 					<div class="ui left icon input">
-						<input type="text" name="userName" placeholder=""> <i
+						<input type="text" id="userName" name="userName" placeholder=""> <i
 							class="user icon"></i>
 						<div class="ui corner label">
 							<i class="icon asterisk"></i>
@@ -55,32 +53,18 @@
 					</div>
 				</div>
 				<div class="field">
-					<label class="">Password</label>
+					<label class="">Password: </label>
 					<div class="ui left icon input">
-						<input type="password" name="password" placeholder=""> <i
+						<input type="password" id="userPwd" name="userPwd" placeholder=""> <i
 							class="lock icon"></i>
 						<div class="ui corner label">
 							<i class="icon asterisk"></i>
 						</div>
 					</div>
 				</div>
-				<div class="field">
-					<label class="">Profile</label> <select
-						class="ui selection dropdown">
-						<option value="1">internal</option>
-						<option value="2">external</option>
-					</select>
-				</div>
 				<div class="inline field">
-					<div class="ui checkbox">
-						<input type="checkbox" name="terms"> <label>Remember
-							Password</label>
-					</div>
+					<div class="ui blue submit button" id="LoginButton">Login</div>
 				</div>
-				<div class="inline field">
-					<div class="ui blue submit button">Login</div>
-				</div>
-
 			</form>
 		</div>
 		<div class="column"></div>

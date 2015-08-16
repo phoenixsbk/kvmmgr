@@ -6,7 +6,7 @@ var VM_COLUMNS = [ {
 	type : "string",
 	width : "100px"
 }, {
-	data : "placement_policy.host.id",
+	data : "host_name",
 	title : "Host",
 	type : "string",
 	width : "100px"
@@ -21,46 +21,42 @@ var VM_COLUMNS = [ {
 	type : "string",
 	width : "100px"
 }, {
-	data : "cluster.id",
+	data : "cluster.name",
 	title : "Cluster",
 	type : "string",
 	width : "50px"
 }, {
-	data : "dc",
+	data : "dcname",
 	title : "Data Center",
 	type : "string",
 	width : "100px"
 }, {
-	data : "mem",
+	data : "",
 	title : "Memory",
 	type : "string",
 	width : "100px"
 }, {
-	data : "cpu",
+	data : "",
 	title : "CPU",
 	type : "string",
 	width : "100px"
 }, {
-	data : "network",
+	data : "",
 	title : "Network",
 	type : "string",
 	width : "100px"
 }, {
-	data : "migration",
+	data : "",
 	title : "Migration",
 	type : "string",
 	width : "100px"
 }, {
-	data : "display",
-	title : "Display",
-	type : "string",
-	width : "100px"
-}, {
-	data : "status",
+	data : "",
 	title : "Status",
 	type : "string",
 	width : "100px"
 } ];
+
 $(function() {
 	$.contextMenu({
 		selector : '#vmstable td',
@@ -104,8 +100,7 @@ $(function() {
 		}
 	});
 });
-$(document).ready(
-		function() {
+$(document).ready(function() {
 			$('.ui.dropdown').dropdown()
 			$('.ui.menu .dropdown').dropdown({
 				on : 'hover'
@@ -126,7 +121,6 @@ $(document).ready(
 					.checkbox();
 			$('.ui.radio.checkbox').checkbox();
 			handler = {
-
 				activate : function() {
 					if (!$(this).hasClass('dropdown')) {
 						$(this).addClass('active').closest('.ui.menu').find(
@@ -146,9 +140,48 @@ $(document).ready(
 				url : "/api/vms",
 				beforeSend : function(xhr) {
 					xhr.setRequestHeader("Accept", "application/json");
+					xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
 				},
 				success : function(data) {
 					var allvms = data.vm;
+					
+					for (var i in allvms) {
+						var hostjson = $.ajax({
+							type : "GET",
+							url : allvms[i].placement_policy.host.href,
+							beforeSend : function(xhr) {
+								xhr.setRequestHeader("Accept", "application/json");
+								xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+							},
+							async : false
+						});
+						allvms[i].host_name = hostjson.responseJSON.name;
+						
+						var clusterjson = $.ajax({
+							type : "GET",
+							url : allvms[i].cluster.href,
+							beforeSend : function(xhr) {
+								xhr.setRequestHeader("Accept", "application/json");
+								xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+							},
+							async : false
+						});
+						allvms[i].cluster.name = clusterjson.responseJSON.name;
+						
+						var dcjson = $.ajax({
+							type : "GET",
+							url : clusterjson.responseJSON.data_center.href,
+							beforeSend : function(xhr) {
+								xhr.setRequestHeader("Accept", "application/json");
+								xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+							},
+							async : false
+						})
+						allvms[i].dcname = dcjson.responseJSON.name;
+						
+						allvms[i].ip = "";
+						allvms[i].fqdn = "";
+					}
 					$("#vmstable").dataTable({
 						"dom" : '<"top"p>rt<"bottom">',
 						"info" : false,
@@ -164,10 +197,10 @@ $(document).ready(
 							}
 						},
 						"columnDefs" : [{
-							"targets" : [4, 5, 6,7,8,9],
+							/*"targets" : [4, 5, 6,7,8,9],
 							"render" : function(data, x, full, meta) {
 								return "";
-							}
+							}*/
 						}]
 					});
 				}

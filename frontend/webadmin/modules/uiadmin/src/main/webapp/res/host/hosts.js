@@ -85,11 +85,16 @@ $(function() {
 });
 
 var reloadData = function() {
+	if (sessionStorage["user"] == null || sessionStorage["auth"] == null) {
+		window.location.href = "login.html";
+	}
+	
 	$.ajax({
 		type : "GET",
 		url : "/api/hosts",
 		beforeSend : function(xhr) {
 			xhr.setRequestHeader("Accept", "application/json");
+			xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
 		},
 		success : function(data) {
 			var allhosts = data.host;
@@ -100,6 +105,7 @@ var reloadData = function() {
 					url : cl.cluster.href,
 					beforeSend : function(xhr) {
 						xhr.setRequestHeader("Accept", "application/json");
+						xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
 					},
 					async : false
 				});
@@ -154,6 +160,7 @@ $(document).ready(function() {
 			url : "/api/hosts",
 			beforeSend : function(xhr) {
 				xhr.setRequestHeader("Content-Type", "application/xml");
+				xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
 			},
 			data : "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><host><name>" +
 			$("#hname").val() + "</name><address>" + $("#haddress").val() + "</address><root_password>" +

@@ -12,8 +12,9 @@
 <script type="text/javascript" src="res/jquery.contextMenu.js"></script>
 <script type="text/javascript" src="res/semantic.js"></script>
 <script type="text/javascript" src="res/jquery.dataTables.js"></script>
-<script type="text/javascript" src="res/common/menutree.js"></script>
+<script type="text/javascript" src="res/common.js"></script>
 <script type="text/javascript" src="res/user/users.js"></script>
+<link rel="stylesheet" type="text/css" href="res/common.css">
 <link rel="stylesheet" type="text/css" href="res/semantic.css">
 <link rel="stylesheet" type="text/css" href="res/jquery.dataTables.css">
 <link rel="stylesheet" type="text/css" href="res/user/users.css">
@@ -23,56 +24,7 @@
 	<!-- Menu start -->
 	<div id="menuinclude" class="ui menu">
 		<a class="item"> Home </a>
-		<div class="ui pointing dropdown link item" tabindex="-1">
-			<i class="dropdown icon" tabindex="0"></i> <span class="text">Data
-				Centers</span>
-			<div class="menu transition hidden" tabindex="-1">
-				<div class="item active selected">
-					<i class="dropdown icon" tabindex="0"></i> <span class="text">Default</span>
-					<div class="menu transition hidden" style="">
-						<div class="header">Storage</div>
-						<div class="item ">192-168-135-129-Local</div>
-						<div class="header">Network</div>
-						<div class="item">mymanager</div>
-						<div class="header">Templates</div>
-						<div class="header">Clusters</div>
-						<div class="item">
-							<i class="dropdown icon" tabindex="1"></i> <span class="text">Default</span>
-							<div class="menu transition hidden" style="">
-								<div class="header">Hosts</div>
-								<div class="item">192.168.135.129</div>
-								<div class="header">VMs</div>
-								<div class="item">cimi_machine1</div>
-								<div class="item">cimi_machine3</div>
-								<div class="item">cimi_machine5</div>
-								<div class="item">vm_mini1</div>
-								<div class="item">vm_mini2</div>
-								<div class="item">myvm</div>
-								<div class="item">myvm_1</div>
-								<div class="item">cimi_machine5</div>
-								<div class="item">cimi_machine7</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="ui dropdown item" tabindex="0">
-			External Providers
-			<div class="menu transition hidden" tabindex="-1" style="">
-				<a class="item">Sign Out</a> <a class="item">Profile</a>
-			</div>
-		</div>
-		<a class="item"> BookMarks </a> <a class="item"> Tags </a>
 		<div class="right menu">
-			<div class="item">
-				<div class="ui icon input">
-					<input type="text" placeholder="Search..."> <i
-						class="search link icon"></i>
-				</div>
-			</div>
-			<a class="item"> Configure </a> <a class="item"> Guide </a> <a
-				class="item"> About </a> <a class="item"> FeedBack </a>
 			<div class="ui dropdown item" tabindex="0">
 				<i class="user icon"></i> admin <i class="dropdown icon"
 					tabindex="0"></i>
@@ -83,86 +35,31 @@
 		</div>
 	</div>
 	<!-- Menu end -->
-	
+
 	<div class="ui grid">
-		<div class="two wide column" style="padding-right: 0px" id="menucontainer">
-		</div>
+		<div class="two wide column" style="padding-right: 0px"
+			id="menucontainer"></div>
 		<div class="fourteen wide column">
 			<!-- Top Menu start -->
 			<div class="table_container">
-				<div class="ui basic button" id="newdcbutton"><i class="plus icon"></i>New</div>
-				<div class="ui basic button"><i class="edit icon"></i>Edit</div>
-				<div class="ui basic button"><i class="remove icon"></i>Remove</div>
-				<div class="ui basic button"><i class="remove circle icon"></i>Force Remove</div>
-				<div class="ui basic button"><i class="info circle icon"></i>Guide Me</div>
+				<div class="ui basic button" id="newdcbutton">
+					<i class="plus icon"></i>New
+				</div>
+				<div class="ui basic button">
+					<i class="edit icon"></i>Edit
+				</div>
+				<div class="ui basic button">
+					<i class="remove icon"></i>Remove
+				</div>
+				<div class="ui basic button">
+					<i class="remove circle icon"></i>Force Remove
+				</div>
+				<div class="ui basic button">
+					<i class="info circle icon"></i>Guide Me
+				</div>
 				<table id="userstable" class="display" cellspacing="0" width="100%"></table>
 			</div>
 			<!-- Top Menu end -->
-			<div class="ui top attached tabular menu">
-				<a class="item" data-tab="storage">Storage</a> <a class="item"
-					data-tab="net">Logical Networks</a> <a class="item" data-tab="qos">QoS</a>
-				<a class="item" data-tab="clust">Clusters</a> <a class="item active"
-					data-tab="perm">Permissions</a> <a class="item" data-tab="event">Events</a>
-			</div>
-			<div class="ui bottom attached tab segment" data-tab="storage">
-				<div class="table_container">
-					<div class="ui basic button">
-						</i>Attach Data
-					</div>
-					<div class="ui basic button">
-						</i>Attach ISO
-					</div>
-					<div class="ui basic button">
-						</i>Attach Export
-					</div>
-					<div class="ui basic button">
-						</i>Detach
-					</div>
-					<div class="ui basic button">
-						</i>Activate
-					</div>
-					<div class="ui basic button">
-						</i>Maintenance
-					</div>
-					<!-- </div> -->
-					<table id="storetable" class="display" cellspacing="0" width="100%">
-					</table>
-				</div>
-			</div>
-			<div class="ui bottom attached tab segment" data-tab="net">
-				<div class="table_container">
-					<div class="ui basic button">
-						</i>New
-					</div>
-					<div class="ui basic button">
-						</i>Edit
-					</div>
-					<div class="ui basic button">
-						</i>Remove
-					</div>
-					<!-- </div> -->
-					<table id="nettable" class="display" cellspacing="0" width="100%">
-					</table>
-				</div>
-			</div>
-			<div class="ui bottom attached tab segment" data-tab="qos"></div>
-			<div class="ui bottom attached tab segment" data-tab="clust">
-				Third</div>
-			<div class="ui bottom attached active tab segment" data-tab="perm">
-				<div class="table_container">
-					<div class="ui basic button">
-						</i>Add
-					</div>
-					<div class="ui basic button">
-						</i>Remove
-					</div>
-					<!-- </div> -->
-					<table id="permtable" class="display" cellspacing="0" width="100%">
-					</table>
-				</div>
-			</div>
-			<div class="ui bottom attached tab segment" data-tab="event">
-				Third</div>
 		</div>
 	</div>
 	<div class="new ui modal" id="newdcmodal">

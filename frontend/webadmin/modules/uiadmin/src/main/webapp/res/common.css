@@ -5,7 +5,7 @@ div#newmodal,div#modalwin,div#isomodal{
     background-color: #FFC1C1;
 }
 .ui.menu{
-    background-color: #F38B8B;
+    background-color: #F38B8B !important;
 }
 div#modalbottom {
     background-color: #F38B8B;

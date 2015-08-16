@@ -86,6 +86,7 @@ function loadUsers() {
 		url : "/api/users",
 		beforeSend : function(xhr) {
 			xhr.setRequestHeader("Accept", "application/json");
+			xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
 		},
 		success : function(data) {
 			$("#userstable").dataTable({
