@@ -87,6 +87,7 @@ $(function() {
 var reloadData = function() {
 	if (sessionStorage["user"] == null || sessionStorage["auth"] == null) {
 		window.location.href = "login.html";
+		return
 	}
 	
 	$.ajax({

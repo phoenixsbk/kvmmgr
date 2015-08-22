@@ -26,7 +26,7 @@ var NETWORK_COLUMNS = [ {
 	type : "string",
 	width : "50px"
 }, {
-	data : "label",
+	data : "netlabels",
 	title : "Label",
 	type : "string",
 	width : "100px"
@@ -79,6 +79,93 @@ $(function() {
 		}
 	});
 });
+
+var reloadData = function() {
+	if (sessionStorage["auth"] == null || sessionStorage["user"] == null) {
+		window.location.href = "login.html";
+		return;
+	}
+	
+	$.ajax({
+		type : "GET",
+		url : "/api/networks",
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader("Accept", "application/json");
+			xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+		},
+		success : function(data) {
+			var allnets = data.network;
+			for (var i in allnets) {
+				var n = allnets[i];
+				var dcname = $.ajax({
+					type : "GET",
+					url : n.data_center.href,
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader("Accept", "application/json");
+						xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+					},
+					async : false
+				});
+				n.dcname = dcname.responseJSON.name;
+				
+				var netlink = n.link;
+				for (var j in netlink) {
+					var linkj = netlink[j];
+					if (linkj.rel == "labels") {
+						var linklabels = $.ajax({
+							type : "GET",
+							url : linkj.href,
+							beforeSend : function(xhr) {
+								xhr.setRequestHeader("Accept", "application/json");
+								xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+							},
+							async : false
+						});
+						var labelObj = linklabels.responseJSON;
+						if (labelObj.label == null) {
+							n.netlabels = "-";
+						} else {
+							var labelAry = labelObj.label;
+							var finalLabel = "";
+							for (var k in labelAry) {
+								var labelEle = labelAry[k];
+								finalLabel += labelEle.id;
+							}
+							n.netlabels = finalLabel;
+						}
+					}
+				}
+				
+				if (n.vlan == null) {
+					n.vlantag = "-";
+				} else {
+					n.vlantag = n.vlan.id;
+				}
+				
+				if (n.provider == null) {
+					n.provider = "-";
+				}
+			}
+			
+			$("#networktable").dataTable({
+				"dom" : '<"top"p>rt<"bottom">',
+				"info" : false,
+				"pageLength" : 10,
+				"data" : allnets,
+				"columns" : NETWORK_COLUMNS,
+				"filter" : false,
+				"lengthChange" : false,
+				"language" : {
+					"paginate" : {
+						"previous" : "<",
+						"next" : ">"
+					}
+				}
+			});
+		}
+	})
+};
+
 $(document).ready(
 		function() {
 			$('.ui.dropdown').dropdown()
@@ -115,50 +202,6 @@ $(document).ready(
 
 			$('.selection.dropdown').dropdown('setting', 'transition',
 					'vertical flip').dropdown('set selected');
-
-			$.ajax({
-				type : "GET",
-				url : "/api/networks",
-				beforeSend : function(xhr) {
-					xhr.setRequestHeader("Accept", "application/json");
-				},
-				success : function(data) {
-					var allnets = data.network;
-					for (var i in allnets) {
-						var n = allnets[i];
-						var dcid = n.data_center.id;
-						var dcname = $.ajax({
-							type : "GET",
-							url : "/api/datacenters/" + dcid,
-							beforeSend : function(xhr) {
-								xhr.setRequestHeader("Accept", "application/json")
-							},
-							async : false
-						});
-						dcname = dcname.responseJSON.name;
-						n.dcname = dcname;
-					}
-					$("#networktable").dataTable({
-						"dom" : '<"top"p>rt<"bottom">',
-						"info" : false,
-						"pageLength" : 10,
-						"data" : allnets,
-						"columns" : NETWORK_COLUMNS,
-						"filter" : false,
-						"lengthChange" : false,
-						"language" : {
-							"paginate" : {
-								"previous" : "<",
-								"next" : ">"
-							}
-						},
-						"columnDefs" : [{
-							"targets" : [4, 5, 6],
-							"render" : function(data, x, full, meta) {
-								return "";
-							}
-						}]
-					});
-				}
-			})
+			
+			reloadData();
 		});
