@@ -143,14 +143,6 @@ var reloadData = function() {
 
 
 $(document).ready(function() {
-	$('.ui.dropdown').dropdown()
-	$('.ui.menu .dropdown').dropdown({
-		on : 'hover'
-	});
-	$('.right.menu .dropdown').dropdown({
-		on : 'hover'
-	});
-
 	$("#newhostbutton").on("click", function() {
 		$("#newhostmodal").modal("show");
 	});

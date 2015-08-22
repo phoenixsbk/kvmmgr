@@ -168,13 +168,6 @@ var reloadData = function() {
 
 $(document).ready(
 		function() {
-			$('.ui.dropdown').dropdown()
-			$('.ui.menu .dropdown').dropdown({
-				on : 'hover'
-			});
-			$('.right.menu .dropdown').dropdown({
-				on : 'hover'
-			});
 			$("#newnetbutton").on("click", function() {
 				$("newnetmodal").modal("show");
 			});
