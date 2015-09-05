@@ -1,4 +1,5 @@
 var MENU_NAME = "storagehref";
+var DEFAULT_DC_ID = "";
 
 var STORAGE_COLUMNS = [ {
 	data : "name",
@@ -20,11 +21,6 @@ var STORAGE_COLUMNS = [ {
 	title : "Format",
 	type : "string",
 	width : "100px"
-}, {
-	data : "cross_dc_status",
-	title : "Cross Datacenter Status",
-	type : "string",
-	width : "50px"
 }, {
 	data : "totalsizeGB",
 	title : "Total Space",
@@ -92,6 +88,26 @@ var reloadData = function() {
 	}
 	
 	$.ajax({
+		type: "GET",
+		url: "/api/datacenters",
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader("Accept", "application/json");
+			xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+		},
+		success: function(data) {
+			var alldcs = data.data_center;
+			for (var i in alldcs) {
+				var cl = alldcs[i];
+				if (cl.name === "Default") {
+					DEFAULT_DC_ID = cl.id;
+					console.log(DEFAULT_DC_ID);
+					break;
+				}
+			}
+		}
+	});
+	
+	$.ajax({
 		type : "GET",
 		url : "/api/storagedomains",
 		beforeSend : function(xhr) {
@@ -107,10 +123,6 @@ var reloadData = function() {
 				
 				disk.availableGB = disk.available / 1024 / 1024 / 1024 + " GB";
 				
-				if (disk.cross_dc_status == null) {
-					disk.cross_dc_status = "Unknown";
-				}
-				
 				if (disk.description == null) {
 					disk.description = "";
 				}
@@ -122,6 +134,9 @@ var reloadData = function() {
 				"data" : alldisks,
 				"columns" : STORAGE_COLUMNS,
 				"filter" : false,
+				"select": {
+					"style": "single"
+				},
 				"lengthChange" : false,
 				"language" : {
 					"paginate" : {
@@ -136,7 +151,25 @@ var reloadData = function() {
 
 $(document).ready(function() {
 	$("#newstoragebutton").on("click", function() {
-		$("newstoragemodal").modal("show");
+		$.ajax({
+			type : "GET",
+			url : "/api/hosts",
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader("Accept", "application/json");
+				xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+			},
+			success : function(data) {
+				var allhosts = data.host;
+				for (var i in allhosts) {
+					$("#shost").append(new Option(allhosts[i].name, allhosts[i].name, false));
+				}
+				$("#newstoragemodal").modal("show");
+			}
+		});
+	});
+	
+	$("#submitButton").on("click", function() {
+		
 	});
 
 	// $('.page.ui.modal').modal('show');

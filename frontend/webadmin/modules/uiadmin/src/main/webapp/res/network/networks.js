@@ -1,5 +1,8 @@
 var MENU_NAME = "networkshref";
 
+var DEFAULT_CLUSTER_ID = "";
+var ndatatable = null;
+
 var NETWORK_COLUMNS = [ {
 	data : "name",
 	title : "Name",
@@ -30,12 +33,8 @@ var NETWORK_COLUMNS = [ {
 	title : "Label",
 	type : "string",
 	width : "100px"
-}, {
-	data : "provider",
-	title : "Provider",
-	type : "string",
-	width : "100px"
 } ];
+
 $(function() {
 	$.contextMenu({
 		selector : '#networktable td',
@@ -87,6 +86,25 @@ var reloadData = function() {
 	}
 	
 	$.ajax({
+		type: "GET",
+		url: "/api/clusters",
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader("Accept", "application/json");
+			xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+		},
+		success: function(data) {
+			var allcls = data.cluster;
+			for (var i in allcls) {
+				var cl = allcls[i];
+				if (cl.name === "Default") {
+					DEFAULT_CLUSTER_ID = cl.id;
+					break;
+				}
+			}
+		}
+	});
+	
+	$.ajax({
 		type : "GET",
 		url : "/api/networks",
 		beforeSend : function(xhr) {
@@ -136,18 +154,23 @@ var reloadData = function() {
 					}
 				}
 				
+				if (n.description == null) {
+					n.description = "";
+				}
+				
 				if (n.vlan == null) {
 					n.vlantag = "-";
 				} else {
 					n.vlantag = n.vlan.id;
 				}
-				
-				if (n.provider == null) {
-					n.provider = "-";
-				}
 			}
 			
-			$("#networktable").dataTable({
+			if (ndatatable != null) {
+				ndatatable.clear();
+				ndatatable.destroy();
+			}
+			
+			ndatatable = $("#networktable").DataTable({
 				"dom" : '<"top"p>rt<"bottom">',
 				"info" : false,
 				"pageLength" : 10,
@@ -166,11 +189,51 @@ var reloadData = function() {
 	})
 };
 
-$(document).ready(
-		function() {
-			$("#newnetbutton").on("click", function() {
-				$("newnetmodal").modal("show");
-			});
+$(document).ready(function() {
+	$("#newnetbutton").on("click", function() {
+		$("#newnetmodal").modal("show");
+	});
+	
+	$("#refreshbutton").on("click", function() {
+		reloadData();
+	});
+	
+	$("#addnetbutton").on("click", function() {
+		var mtu = "1500";
+		if ($("#nmtucustom").prop("checked")) {
+			mtu = $("#nmtucustomval").val();
+			if (mtu == null) {
+				mtu = "1500";
+			}
+		}
+		
+		var vlanxml = "";
+		if ($("#ntagcheck").prop("checked")) {
+			var vlantag = $("#ntag").val();
+			if (vlantag != null && vlantag != "") {
+				vlanxml = "<vlan id=\"" + vlantag + "\" />";
+			}
+		}
+		
+		$.ajax({
+			type: "POST",
+			url: "/api/networks",
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader("Accept", "application/json");
+				xhr.setRequestHeader("Content-Type", "application/xml");
+				xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+			},
+			data: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><network><data_center><name>Default</name></data_center><name>" +
+			$("#nname").val() + "</name><description>" + $("#ndesc").val() + "</description><comment>" + $("#ncomment").val() + "</comment><mtu>" +
+			mtu + "</mtu>" + vlanxml + "<usages><usage>vm</usage></usages><cluster id=\"" + DEFAULT_CLUSTER_ID + "\" /></network>",
+			success: function(data) {
+				reloadData();
+			},
+			error: function(err) {
+				alert(err.responseJSON.detail);
+			}
+		});
+	});
 
 			// $('.page.ui.modal').modal('show');
 			// $('.newnet.ui.modal').modal('show');

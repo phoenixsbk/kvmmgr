@@ -1,5 +1,7 @@
 var MENU_NAME = "vmshref";
 
+var vmtable = null;
+
 var VM_COLUMNS = [ {
 	data : "name",
 	title : "Name",
@@ -98,16 +100,20 @@ var reloadData = function() {
 			var allvms = data.vm;
 			
 			for (var i in allvms) {
-				var hostjson = $.ajax({
-					type : "GET",
-					url : allvms[i].placement_policy.host.href,
-					beforeSend : function(xhr) {
-						xhr.setRequestHeader("Accept", "application/json");
-						xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
-					},
-					async : false
-				});
-				allvms[i].host_name = hostjson.responseJSON.name;
+				if (allvms[i].host != null) {
+					var hostjson = $.ajax({
+						type : "GET",
+						url : allvms[i].host.href,
+						beforeSend : function(xhr) {
+							xhr.setRequestHeader("Accept", "application/json");
+							xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+						},
+						async : false
+					});
+					allvms[i].host_name = hostjson.responseJSON.name;
+				} else {
+					allvms[i].host_name = "";
+				}
 				
 				var clusterjson = $.ajax({
 					type : "GET",
@@ -134,7 +140,12 @@ var reloadData = function() {
 				allvms[i].ip = "";
 				allvms[i].fqdn = "";
 			}
-			$("#vmstable").dataTable({
+			
+			if (vmtable != null) {
+				vmtable.destroy();
+			}
+			
+			vmtable = $("#vmstable").DataTable({
 				"dom" : '<"top"p>rt<"bottom">',
 				"info" : false,
 				"pageLength" : 10,
@@ -159,8 +170,16 @@ var reloadData = function() {
 	});
 };
 $(document).ready(function() {
-	$("#newstoragebutton").on("click", function() {
-		$("newstoragemodal").modal("show");
+	$("#newvmbutton").on("click", function() {
+		$("#newvmmodal").modal("show");
+	});
+	
+	$("#refreshbutton").on("click", function() {
+		reloadData();
+	});
+	
+	$("#addvmbutton").on("click", function() {
+		
 	});
 
 	// $('.page.ui.modal').modal('show');

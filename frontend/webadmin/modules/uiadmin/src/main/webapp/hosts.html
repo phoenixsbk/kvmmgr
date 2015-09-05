@@ -13,6 +13,7 @@
 <script type="text/javascript" src="res/jquery.contextMenu.js"></script>
 <script type="text/javascript" src="res/semantic.js"></script>
 <script type="text/javascript" src="res/jquery.dataTables.js"></script>
+<script type="text/javascript" src="res/dataTables.select.min.js"></script>
 <script type="text/javascript" src="res/common.js"></script>
 <script type="text/javascript" src="res/host/hosts.js"></script>
 <link rel="stylesheet" type="text/css" href="res/common.css">
@@ -20,6 +21,8 @@
 <link rel="stylesheet" type="text/css" href="res/jquery.dataTables.css">
 <link rel="stylesheet" type="text/css" href="res/host/hosts.css">
 <link rel="stylesheet" type="text/css" href="res/jquery.contextMenu.css">
+<link rel="stylesheet" type="text/css" href="res/select.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="res/select.bootstrap.min.css">
 </head>
 <body id="page">
 	<div class="ui menu" id="topmenucontainer">
@@ -33,14 +36,14 @@
 				<div class="ui basic button" id="newhostbutton">
 					<i class="plus icon"></i>New
 				</div>
-				<div class="ui basic button">
+				<div class="ui basic button" id="edithostbutton">
 					<i class="edit icon"></i>Edit
 				</div>
-				<div class="ui basic button">
+				<div class="ui basic button" id="rmhostbutton">
 					<i class="remove icon"></i>Remove
 				</div>
-				<div class="ui basic button">
-					<i class="info circle icon"></i>Guide Me
+				<div class="ui basic button" id="refreshbutton">
+					<i class="circle icon"></i>Refresh
 				</div>
 				<table id="hosttable" class="display" cellspacing="0" width="100%">
 				</table>
@@ -98,6 +101,54 @@
 		</div>
 		<div id="modalbottom" class="actions">
 			<div class="ui primary button" id="submitButton">Submit</div>
+			<div class="ui basicv button">Cancel</div>
+		</div>
+	</div>
+	
+	<!-- Edit Host Modal -->
+	<div class="page ui modal" id="edithostmodal">
+		<i class="close icon"></i>
+		<div class="header">Edit Host</div>
+		<div id="modalwin" class="content">
+			<div class="ui grid">
+				<div class="nine wide column">
+					<div class="ui form">
+						<div class="fields">
+							<div class="four wide field name">Name:</div>
+							<div class="twelve wide field value">
+								<input type="text" placeholder="Host Name" id="ehname" name="ehname">
+							</div>
+						</div>
+						<div class="fields">
+							<div class="four wide field name">Comment:</div>
+							<div class="twelve wide field value">
+								<input type="text" placeholder="Comment" id="ehcomment" name="ehcomment">
+							</div>
+						</div>
+						<div class="fields">
+							<div class="four wide field name">Address:</div>
+							<div class="twelve wide field value">
+								<input type="text" placeholder="Address" id="ehaddress" name="ehaddress" readonly="true">
+							</div>
+						</div>
+						<div class="fields">
+							<div class="four wide field name">SSH Port:</div>
+							<div class="twelve wide field value">
+								<input type="text" placeholder="SSH Port" id="ehport" name="ehport" readonly="true">
+							</div>
+						</div>
+						<div class="fields">
+							<div class="six wide field name">Authentication:</div>
+							<div class="twelve wide field value">
+								<input type="text" value="root" readonly="true" id="ehuser" name="ehuser" readonly="true">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="modalbottom" class="actions">
+			<div class="ui primary button" id="editButton">Submit</div>
 			<div class="ui basicv button">Cancel</div>
 		</div>
 	</div>
