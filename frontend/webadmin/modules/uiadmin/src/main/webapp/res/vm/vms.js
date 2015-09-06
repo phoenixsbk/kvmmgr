@@ -142,6 +142,7 @@ var reloadData = function() {
 			}
 			
 			if (vmtable != null) {
+				vmtable.clear();
 				vmtable.destroy();
 			}
 			

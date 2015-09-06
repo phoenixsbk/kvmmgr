@@ -178,6 +178,9 @@ var reloadData = function() {
 				"columns" : NETWORK_COLUMNS,
 				"filter" : false,
 				"lengthChange" : false,
+				"select": {
+					"style": "single"
+				},
 				"language" : {
 					"paginate" : {
 						"previous" : "<",
@@ -191,7 +194,55 @@ var reloadData = function() {
 
 $(document).ready(function() {
 	$("#newnetbutton").on("click", function() {
+		$("#nname").val("");
+		$("#ndesc").val("");
+		$("#ncomment").val("");
+		$("#nmtucustomval").val("");
+		$("#ntag").val("");
 		$("#newnetmodal").modal("show");
+	});
+	
+	$("#editnetbutton").on("click", function() {
+		if (ndatatable.rows(".selected") != null) {
+			var selnet = ndatatable.rows(".selected").data()[0];
+			
+			$("#enname").val(selnet.name);
+			$("#endesc").val(selnet.description);
+			$("#encomment").val(selnet.comment);
+			if (selnet.label != null) {
+				$("#elabel").val(selnet.label);
+			}
+			var mtu = selnet.mtu;
+			if (mtu == "0") {
+				$("#enmtudefault").prop("checked", true);
+			} else {
+				$("#entmtucustom").prop("checked", true);
+				$("#enmtucustomval").val(mtu);
+			}
+			
+			var allusg = selnet.usages;
+			if (allusg != null && allusg.usage != null) {
+				for (var i in allusg.usage) {
+					if (allusg.usage[i] == "vm") {
+						$("#envmnet").prop("checked", true);
+						break;
+					}
+				}
+			}
+			
+			if (selnet.vlan != null && selnet.vlan.id != null) {
+				$("#entag").val(selnet.vlan.id);
+				$("#entagcheck").prop("checked", true);
+			}
+			
+			$("#enetmodal").modal("show");
+		} else {
+			alert("No Row Selected.");
+		}
+	});
+	
+	$("#rmnetbutton").on("click", function() {
+		
 	});
 	
 	$("#refreshbutton").on("click", function() {
@@ -231,6 +282,45 @@ $(document).ready(function() {
 			},
 			error: function(err) {
 				alert(err.responseJSON.detail);
+			}
+		});
+	});
+	
+	$("#ednetbutton").on("click", function() {
+		var selnet = ndatatable.rows(".selected").data()[0];
+		var selnetid = selnet.id;
+		
+		var mtu = "1500";
+		if ($("#enmtucustom").prop("checked")) {
+			mtu = $("#enmtucustomval").val();
+			if (mtu == null) {
+				mtu = "1500";
+			}
+		}
+		
+		var vlanxml = "";
+		if ($("#entagcheck").prop("checked")) {
+			var vlantag = $("#entag").val();
+			if (vlantag != null && vlantag != "") {
+				vlanxml = "<vlan id=\"" + vlantag + "\" />";
+			}
+		}
+		
+		$.ajax({
+			type : "PUT",
+			url : "/api/networks/" + selnetid,
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader("Content-Type", "application/xml");
+				xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+			},
+			data : "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><network><name>" + $("#enname").val() +
+			"</name><description>" + $("#endesc").val() + "</description><comment>" + $("#encomment").val() + "</comment><mtu>" +
+			mtu + "</mtu>" + vlanxml + "<usages><usage>vm</usage></usages></network>",
+			success: function(data) {
+				reloadData();
+			},
+			error: function(err) {
+				alert(err.detail);
 			}
 		});
 	});
