@@ -242,7 +242,23 @@ $(document).ready(function() {
 	});
 	
 	$("#rmnetbutton").on("click", function() {
-		
+		if (ndatatable.rows(".selected") != null) {
+			var selnet = ndatatable.rows(".selected").data()[0];
+			$.ajax({
+				type: "DELETE",
+				url: selnet.href,
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader("Accept", "application/json");
+					xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+				},
+				success: function(data) {
+					reloadData();
+				},
+				error: function(err) {
+					alert(err.responseJSON.detail);
+				}
+			});
+		}
 	});
 	
 	$("#refreshbutton").on("click", function() {
