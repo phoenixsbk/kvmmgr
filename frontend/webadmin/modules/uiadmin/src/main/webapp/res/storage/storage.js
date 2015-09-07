@@ -1,4 +1,5 @@
 var MENU_NAME = "storagehref";
+var storagetable = null;
 var DEFAULT_DC_ID = "";
 
 var STORAGE_COLUMNS = [ {
@@ -15,7 +16,12 @@ var STORAGE_COLUMNS = [ {
 	data : "storage.type",
 	title : "Storage Type",
 	type : "string",
-	width : "200px"
+	width : "100px"
+}, {
+	data: "attachstatus",
+	title: "Cross Datacenter Status",
+	type: "string",
+	width: "100px"
 }, {
 	data : "storage_format",
 	title : "Format",
@@ -100,7 +106,6 @@ var reloadData = function() {
 				var cl = alldcs[i];
 				if (cl.name === "Default") {
 					DEFAULT_DC_ID = cl.id;
-					console.log(DEFAULT_DC_ID);
 					break;
 				}
 			}
@@ -126,8 +131,20 @@ var reloadData = function() {
 				if (disk.description == null) {
 					disk.description = "";
 				}
+				
+				if (disk.status != null && disk.status.state != null) {
+					disk.attachstatus = disk.status.state;
+				} else {
+					disk.attachstatus = "Active";
+				}
 			}
-			$("#storagetable").dataTable({
+			
+			if (storagetable != null) {
+				storagetable.clear();
+				storagetable.destroy();
+			}
+			
+			storagetable = $("#storagetable").DataTable({
 				"dom" : '<"top"p>rt<"bottom">',
 				"info" : false,
 				"pageLength" : 10,
@@ -149,6 +166,48 @@ var reloadData = function() {
 	});
 };
 
+var waitJobAndDelete = function(joburl, storageid) {
+	$.ajax({
+		type: "GET",
+		url: joburl,
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader("Accept", "application/json");
+			xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+		},
+		success: function(jdata) {
+			if (jdata.status.state == "FINISHED") {
+				setTimeout(function() { deleteJob(storageid); }, 10500);
+			} else {
+				setTimeout(function() {
+					waitJobAndDelete(joburl, storageid);
+				}, 3700);
+			}
+		},
+		error: function(edata) {
+			console.log(edata);
+			alert(edata.responseJSON.detail);
+		}
+	});
+};
+
+var deleteJob = function(storageid) {
+	$.ajax({
+		type: "DELETE",
+		url: "/api/datacenters/" + DEFAULT_DC_ID + "/storagedomains/" + storageid,
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader("Accept", "application/json");
+			xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+		},
+		success: function(sddata) {
+			reloadData();
+		},
+		error: function(errr) {
+			console.log(errr);
+			alert(errr.responseJSON.detail);
+		}
+	});
+}
+
 $(document).ready(function() {
 	$("#newstoragebutton").on("click", function() {
 		$.ajax({
@@ -159,17 +218,152 @@ $(document).ready(function() {
 				xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
 			},
 			success : function(data) {
+				$("#shost").find("option").remove();
 				var allhosts = data.host;
 				for (var i in allhosts) {
 					$("#shost").append(new Option(allhosts[i].name, allhosts[i].name, false));
 				}
+				$("#sname").val("");
+				$("#scomment").val("");
+				$("#sdesc").val("");
+				$("#spath").val("");
 				$("#newstoragemodal").modal("show");
 			}
 		});
 	});
 	
-	$("#submitButton").on("click", function() {
-		
+	$("#rmstoragebutton").on("click", function() {
+		if (storagetable.row(".selected") != null) {
+			var selstorage = storagetable.row(".selected").data();
+			$.ajax({
+				type: "GET",
+				url: "/api/hosts",
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader("Accept", "application/json");
+					xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+				},
+				success: function(hdata) {
+					var allhs = hdata.host;
+					var selhostname = "";
+					for (var i in allhs) {
+						var hadd = allhs[i].address;
+						if (hadd == selstorage.storage.address) {
+							selhostname = allhs[i].name;
+							break;
+						}
+					}
+					
+					if (selhostname != "") {
+						$.ajax({
+							type: "DELETE",
+							url: "/api/storagedomains/" + selstorage.id,
+							beforeSend : function(xhr) {
+								xhr.setRequestHeader("Accept", "application/json");
+								xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+								xhr.setRequestHeader("Content-Type", "application/xml");
+							},
+							data: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><storage_domain><host><name>" +
+							selhostname + "</name></host></storage_domain>",
+							success: function(ddata) {
+								reloadData();
+							},
+							error: function(err) {
+								console.log(err);
+								alert(err.responseJSON.detail);
+							}
+						});
+					} else {
+						alert("No Host found match the storage");
+					}
+				}
+			});
+			
+		}
+	});
+	
+	$("#newstoragesubmitbutton").on("click", function() {
+		var allpath = $("#spath").val().split(":");
+		$.ajax({
+			type: "POST",
+			url: "/api/storagedomains",
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader("Accept", "application/json");
+				xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+				xhr.setRequestHeader("Content-Type", "application/xml");
+			},
+			data: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><storage_domain><host><name>" + $("#shost option:selected").val() +
+			"</name></host><type>data</type><format>true</format><name>" + $("#sname").val() + "</name><comment>" + $("#scomment").val() + "</comment><storage>" +
+			"<type>" + $("#stype option:selected").val() + "</type><address>" + allpath[0] + "</address><path>" + allpath[1] + "</path></storage><storage_format>v3</storage_format></storage_domain>",
+			success: function(data) {
+				console.log(data);
+				reloadData();
+			},
+			error: function(err) {
+				console.log(err);
+				alert(err.responseJSON.detail);
+			}
+		});
+	});
+	
+	$("#activatestoragebutton").on("click", function() {
+		if (storagetable.row(".selected") != null) {
+			var selstorage = storagetable.row(".selected").data();
+			if (selstorage.attachstatus != "unattached") {
+				alert("Storage is not in unattached status");
+				return;
+			}
+			
+			$.ajax({
+				type: "POST",
+				url: "/api/datacenters/" + DEFAULT_DC_ID + "/storagedomains",
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader("Accept", "application/json");
+					xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+					xhr.setRequestHeader("Content-Type", "application/xml");
+				},
+				data: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><storage_domain><name>" +
+				selstorage.name + "</name></storage_domain>",
+				success: function(sdata) {
+					setTimeout(reloadData, 3000);
+				},
+				error: function(err) {
+					console.log(err);
+					alert(err.responseJSON.detail);
+				}
+			});
+		}
+	});
+	
+	$("#deactivatestoragebutton").on("click", function() {
+		if (storagetable.row(".selected") != null) {
+			var selstorage = storagetable.row(".selected").data();
+			if (selstorage.attachstatus != "Active") {
+				alert("Storage is not in active status");
+				return;
+			}
+			
+			$.ajax({
+				type: "POST",
+				url: "/api/datacenters/" + DEFAULT_DC_ID + "/storagedomains/" + selstorage.id + "/deactivate",
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader("Accept", "application/json");
+					xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+					xhr.setRequestHeader("Content-Type", "application/xml");
+				},
+				data: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><action></action>",
+				success: function(sdata) {
+					waitJobAndDelete(sdata.job.href, selstorage.id);
+				},
+				error: function(err) {
+					console.log(err);
+					alert(err.responseJSON.detail);
+				}
+			});
+		}
+	});
+	
+	$("#refreshstoragebutton").on("click", function() {
+		reloadData();
 	});
 
 	// $('.page.ui.modal').modal('show');

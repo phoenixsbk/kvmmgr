@@ -35,16 +35,22 @@
 			<!-- <div class="button demo"> -->
 			<div class="table_container">
 				<div class="ui basic button" id="newstoragebutton">
-					<i class="plus icon"></i>New Domain
+					<i class="plus icon"></i>New Storage Domain
 				</div>
-				<div class="ui basic button">
-					<i class="edit icon"></i>Edit
+				<div class="ui basic button" id="editstoragebutton">
+					<i class="edit icon"></i>Edit Storage Domain
 				</div>
-				<div class="ui basic button">
-					<i class="remove icon"></i>Remove
+				<div class="ui basic button" id="rmstoragebutton">
+					<i class="remove icon"></i>Remove Storage Domain
 				</div>
-				<div class="ui basic button">
-					<i class="circle icon"></i> Refresh
+				<div class="ui basic button" id="activatestoragebutton">
+					<i class="add circle icon"></i>Activate
+				</div>
+				<div class="ui basic button" id="deactivatestoragebutton">
+					<i class="minus circle icon"></i>Deactivate
+				</div>
+				<div class="ui basic button" id="refreshstoragebutton">
+					<i class="refresh icon"></i> Refresh
 				</div>
 				<!-- </div> -->
 				<table id="storagetable" class="display" cellspacing="0"
@@ -84,7 +90,7 @@
 							<div class="nine wide field name">Domain Function/Storage Type:</div>
 							<div class="twelve wide field value">
 								<select id="stype" name="stype">
-									<option value="NFS">Data / NFS</option>
+									<option value="nfs">Data / NFS</option>
 								</select>
 							</div>
 						</div>
@@ -104,7 +110,7 @@
 			</div>
 		</div>
 		<div id="modalbottom" class="actions">
-			<div class="ui primary button" id="submitButton">Submit</div>
+			<div class="ui primary button" id="newstoragesubmitbutton">Submit</div>
 			<div class="ui basicv button">Cancel</div>
 		</div>
 	</div>
