@@ -172,6 +172,47 @@ var reloadData = function() {
 };
 $(document).ready(function() {
 	$("#newvmbutton").on("click", function() {
+		$("#nvmname").val("");
+		$("#nvmdesc").val("");
+		$("#nvmcomment").val("");
+		$.ajax({
+			type : "GET",
+			url : "/api/networks",
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader("Accept", "application/json");
+				xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+			},
+			success : function(data) {
+				var allnets = data.network;
+				for (var i in allnets) {
+					var netlink = allnets[i].link;
+					for (var j in netlink) {
+						var linkj = netlink[j];
+						if (linkj.rel == "labels") {
+							var linklabels = $.ajax({
+								type : "GET",
+								url : linkj.href,
+								beforeSend : function(xhr) {
+									xhr.setRequestHeader("Accept", "application/json");
+									xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+								},
+								async : false
+							});
+							var labelObj = linklabels.responseJSON;
+							if (labelObj.label == null) {
+								n.netlabels = "-";
+							} else {
+								var labelAry = labelObj.label;
+								var finalLabel = "";
+								for (var k in labelAry) {
+									var labelEle = labelAry[k];
+									finalLabel += labelEle.id;
+								}
+								n.netlabels = finalLabel;
+							}
+						}
+					}
+				}
 		$("#newvmmodal").modal("show");
 	});
 	
@@ -180,7 +221,15 @@ $(document).ready(function() {
 	});
 	
 	$("#addvmbutton").on("click", function() {
-		
+		$.ajax({
+			type : "POST",
+			url : "/api/vms",
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader("Accept", "application/json");
+				xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+			},
+			data: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+		})
 	});
 
 	// $('.page.ui.modal').modal('show');

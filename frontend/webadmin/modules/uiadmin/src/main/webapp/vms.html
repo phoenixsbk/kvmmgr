@@ -59,27 +59,25 @@
 						<div class="fields">
 							<div class="four wide field name">Name:</div>
 							<div class="twelve wide field value">
-								<input type="text" placeholder="VM Name">
+								<input type="text" placeholder="VM Name" id="nvmname" name="nvmname">
 							</div>
 						</div>
 						<div class="fields">
 							<div class="four wide field name">Description:</div>
 							<div class="twelve wide field value">
-								<input type="text" placeholder="Description">
+								<input type="text" placeholder="Description" id="nvmdesc" name="nvmdesc">
 							</div>
 						</div>
 						<div class="fields">
 							<div class="four wide field name">Comment:</div>
 							<div class="twelve wide field value">
-								<input type="text" placeholder="Comment">
+								<input type="text" placeholder="Comment" id="nvmcomment" name="nvmcomment">
 							</div>
 						</div>
 						<div class="pick fields">
 							<div class="two wide field name">nic1</div>
 							<div class="ten wide field">
-								<select class="ui selection dropdown">
-									<option value="1">mgmt/mgmt</option>
-									<option value="2">mgmt1/mgmt2</option>
+								<select class="ui selection dropdown" id="nvmnic" name="nvmnic">
 								</select>
 							</div>
 						</div>
@@ -92,10 +90,48 @@
 								<div class="fields">
 									<div class="seven wide field name">Operation System</div>
 									<div class="nine wide field value">
-										<select class="ui selection dropdown">
-											<option value="1" selected>CentOS</option>
-											<option value="2">Ubuntu</option>
+										<select class="ui selection dropdown" id="nvmos" name="nvmos">
+											<option value="other">Other</option>
+											<option value="rhel_3">Redhat Enterprise 3.x</option>
+											<option value="rhel_3x64">Redhat Enterprise 3.x x64</option>
+											<option value="rhel_4">Redhat Enterprise 4.x</option>
+											<option value="rhel_4x64">Redhat Enterprise 4.x x64</option>
+											<option value="rhel_5">Redhat Enterprise 5.x</option>
+											<option value="rhel_5x64">Redhat Enterprise 5.x x64</option>
+											<option value="rhel_6">Redhat Enterprise 6.x</option>
+											<option value="rhel_6x64">Redhat Enterprise 6.x x64</option>
+											<option value="rhel_7x64">Redhat Enterprise 7.x x64</option>
+											<option value="suse_11">SUSE Linux Enterprise 11</option>
+											<option value="ubuntu_12_04">Ubuntu 12.04</option>
+											<option value="ubuntu_12_10">Ubuntu 12.10</option>
+											<option value="ubuntu_13_04">Ubuntu 13.04</option>
+											<option value="ubuntu_13_10">Ubuntu 13.10</option>
+											<option value="windows_2003">Windows 2003</option>
+											<option value="windows_2003x64">Windows 2003 x64</option>
+											<option value="windows_2008">Windows 2008</option>
+											<option value="windows_2008x64">Windows 2008 x64</option>
+											<option value="windows_2008R2x64">Windows 2008 R2 x64</option>
+											<option value="windows_7">Windows 7</option>
+											<option value="windows_7x64">Windows 7 x64</option>
+											<option value="windows_8">Windows 8</option>
+											<option value="windows_8x64">Windows 8 x64</option>
+											<option value="windows_xp">Windows XP</option>
 										</select>
+									</div>
+								</div>
+								<div class="fields">
+									<div class="seven wide field name">Optimized For:</div>
+									<div class="nine wide field value">
+										<select class="ui selection dropdown" id="nvtype" name="nvtype">
+											<option value="server">Server</option>
+											<option value="desktop">Desktop</option>
+										</select>
+									</div>
+								</div>
+								<div class="fields">
+									<div class="seven wide field name">Disk Size</div>
+									<div class="nine wide field value">
+										<input type="text" id="nvmdisk" name="nvmdisk" placeHolder="Disk Size (GB)" />
 									</div>
 								</div>
 							</div>
