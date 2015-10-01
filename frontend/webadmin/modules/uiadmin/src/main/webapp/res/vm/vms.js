@@ -1,5 +1,5 @@
 var MENU_NAME = "vmshref";
-
+var DEFAULT_CLUSTER_ID = null;
 var vmtable = null;
 
 var VM_COLUMNS = [ {
@@ -90,6 +90,25 @@ var reloadData = function() {
 	}
 	
 	$.ajax({
+		type: "GET",
+		url: "/api/clusters",
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader("Accept", "application/json");
+			xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+		},
+		success: function(data) {
+			var allcls = data.cluster;
+			for (var i in allcls) {
+				var cl = allcls[i];
+				if (cl.name === "Default") {
+					DEFAULT_CLUSTER_ID = cl.id;
+					break;
+				}
+			}
+		}
+	});
+	
+	$.ajax({
 		type : "GET",
 		url : "/api/vms",
 		beforeSend : function(xhr) {
@@ -170,6 +189,7 @@ var reloadData = function() {
 		}
 	});
 };
+
 $(document).ready(function() {
 	$("#newvmbutton").on("click", function() {
 		$("#nvmname").val("");
@@ -177,7 +197,7 @@ $(document).ready(function() {
 		$("#nvmcomment").val("");
 		$.ajax({
 			type : "GET",
-			url : "/api/networks",
+			url : "/api/clusters/" + DEFAULT_CLUSTER_ID + "/networks",
 			beforeSend : function(xhr) {
 				xhr.setRequestHeader("Accept", "application/json");
 				xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
@@ -185,35 +205,44 @@ $(document).ready(function() {
 			success : function(data) {
 				var allnets = data.network;
 				for (var i in allnets) {
-					var netlink = allnets[i].link;
-					for (var j in netlink) {
-						var linkj = netlink[j];
-						if (linkj.rel == "labels") {
-							var linklabels = $.ajax({
-								type : "GET",
-								url : linkj.href,
-								beforeSend : function(xhr) {
-									xhr.setRequestHeader("Accept", "application/json");
-									xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
-								},
-								async : false
-							});
-							var labelObj = linklabels.responseJSON;
-							if (labelObj.label == null) {
-								n.netlabels = "-";
+					$("#nvmnic").append(new Option(allnets[i].name, allnets[i].name, false));
+				}
+				
+				$.ajax({
+					type: "GET",
+					url: "/api/storagedomains",
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader("Accept", "application/json");
+						xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+					},
+					success : function(data) {
+						var alldisks = data.storage_domain;
+						for (var i in alldisks) {
+							var disk = alldisks[i];
+							var totalsize = disk.available + disk.used;
+							disk.totalsizeGB = totalsize / 1024 / 1024 / 1024 + " GB";
+							
+							disk.availableGB = disk.available / 1024 / 1024 / 1024 + " GB";
+							
+							if (disk.status != null && disk.status.state != null) {
+								disk.attachstatus = disk.status.state;
 							} else {
-								var labelAry = labelObj.label;
-								var finalLabel = "";
-								for (var k in labelAry) {
-									var labelEle = labelAry[k];
-									finalLabel += labelEle.id;
-								}
-								n.netlabels = finalLabel;
+								disk.attachstatus = "Active";
+							}
+							
+							if (disk.attachstatus == "Active") {
+								$("#nvmsdomain").append(new Option(disk.name + "(" + disk.availableGB + "/" + disk.totalsizeGB + ")", disk.name, false));
 							}
 						}
+						$("#newvmmodal").modal("show");
 					}
-				}
-		$("#newvmmodal").modal("show");
+				});
+				
+			},
+			error: function(neterr) {
+				alert(neterr.responseJSON.detail);
+			}
+		});
 	});
 	
 	$("#refreshbutton").on("click", function() {
@@ -226,9 +255,70 @@ $(document).ready(function() {
 			url : "/api/vms",
 			beforeSend : function(xhr) {
 				xhr.setRequestHeader("Accept", "application/json");
+				xhr.setRequestHeader("Content-Type", "application/xml");
 				xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
 			},
-			data: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+			data: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><vm><name>" + $("#nvmname").val() + "</name>" +
+			"<template><name>Blank</name></template><os type=\"" + $("#nvmos option:selected").val() + "\" /><type>" + $("#nvtype option:selected").val() + "</type>" +
+			"<description>" + $("#nvmdesc").val() + "</description><comment>" + $("#nvmcomment").val() + "</comment><cluster><name>Default</name></cluster></vm>",
+			success: function(vmdata) {
+				var vmid = vmdata.id;
+				$.ajax({
+					type: "GET",
+					url: "/api/vnicprofiles",
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader("Accept", "application/json");
+						xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+					},
+					success: function(nicpdata) {
+						var nicps = nicpdata.vnic_profile;
+						for (var i in nicps) {
+							if (nicps[i].name == $("#nvmnic option:selected").val()) {
+								var nicid = nicps[i].id;
+								$.ajax({
+									type: "POST",
+									url: "/api/vms/" + vmid + "/nics",
+									beforeSend : function(xhr) {
+										xhr.setRequestHeader("Accept", "application/json");
+										xhr.setRequestHeader("Content-Type", "application/xml");
+										xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+									},
+									data: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><nic><name>nic1</name><vnic_profile id=\"" + nicid + "\" /></nic>",
+									success: function(addnicdata) {
+										var dsize = $("#nvmdisk").val();
+										dsize = Number(dsize) * 1024 * 1024 * 1024;
+										$.ajax({
+											type: "POST",
+											url: "/api/vms/" + vmid + "/disks",
+											beforeSend : function(xhr) {
+												xhr.setRequestHeader("Accept", "application/json");
+												xhr.setRequestHeader("Content-Type", "application/xml");
+												xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+											},
+											data: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><disk><provisioned_size>" + dsize + "</provisioned_size>" +
+											"<size>" + dsize + "</size><interface>virtio</interface><format>raw</format><alias>" + $("#nvmname").val() + "_Disk1</alias>" +
+											"<name>" + $("#nvmname").val() + "_Disk1</name><bootable>true</bootable><storage_domains><storage_domain><name>" +
+											$("#nvmsdomain option:selected").val() + "</name></storage_domain></storage_domains></disk>",
+											success: function(diskdata) {
+												reloadData();
+											},
+											error: function(diskerr) {
+												alert(diskerr.responseJSON.detail);
+											}
+										});
+									},
+									error: function(nicerr) {
+										alert(nicerr.responseJSON.detail);
+									}
+								});
+							}
+						}
+					},
+					error: function(getnicerr) {
+						alert(getnicerr.responseJSON.detail);
+					}
+				});
+			}
 		})
 	});
 

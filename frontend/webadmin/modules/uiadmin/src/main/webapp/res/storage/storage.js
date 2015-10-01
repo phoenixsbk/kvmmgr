@@ -295,11 +295,9 @@ $(document).ready(function() {
 			"</name></host><type>data</type><format>true</format><name>" + $("#sname").val() + "</name><comment>" + $("#scomment").val() + "</comment><storage>" +
 			"<type>" + $("#stype option:selected").val() + "</type><address>" + allpath[0] + "</address><path>" + allpath[1] + "</path></storage><storage_format>v3</storage_format></storage_domain>",
 			success: function(data) {
-				console.log(data);
 				reloadData();
 			},
 			error: function(err) {
-				console.log(err);
 				alert(err.responseJSON.detail);
 			}
 		});

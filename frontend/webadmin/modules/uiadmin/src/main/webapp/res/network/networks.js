@@ -28,11 +28,6 @@ var NETWORK_COLUMNS = [ {
 	title : "VLan Tag",
 	type : "string",
 	width : "50px"
-}, {
-	data : "netlabels",
-	title : "Label",
-	type : "string",
-	width : "100px"
 } ];
 
 $(function() {
@@ -101,95 +96,69 @@ var reloadData = function() {
 					break;
 				}
 			}
-		}
-	});
-	
-	$.ajax({
-		type : "GET",
-		url : "/api/networks",
-		beforeSend : function(xhr) {
-			xhr.setRequestHeader("Accept", "application/json");
-			xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
-		},
-		success : function(data) {
-			var allnets = data.network;
-			for (var i in allnets) {
-				var n = allnets[i];
-				var dcname = $.ajax({
-					type : "GET",
-					url : n.data_center.href,
-					beforeSend : function(xhr) {
-						xhr.setRequestHeader("Accept", "application/json");
-						xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
-					},
-					async : false
-				});
-				n.dcname = dcname.responseJSON.name;
-				
-				var netlink = n.link;
-				for (var j in netlink) {
-					var linkj = netlink[j];
-					if (linkj.rel == "labels") {
-						var linklabels = $.ajax({
+			
+			$.ajax({
+				type : "GET",
+				url : "/api/clusters/" + DEFAULT_CLUSTER_ID + "/networks",
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader("Accept", "application/json");
+					xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+				},
+				success : function(data) {
+					var allnets = data.network;
+					for (var i in allnets) {
+						var n = allnets[i];
+						var dcname = $.ajax({
 							type : "GET",
-							url : linkj.href,
+							url : n.data_center.href,
 							beforeSend : function(xhr) {
 								xhr.setRequestHeader("Accept", "application/json");
 								xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
 							},
 							async : false
 						});
-						var labelObj = linklabels.responseJSON;
-						if (labelObj.label == null) {
-							n.netlabels = "-";
+						n.dcname = dcname.responseJSON.name;
+						
+						if (n.description == null) {
+							n.description = "";
+						}
+						
+						if (n.vlan == null) {
+							n.vlantag = "-";
 						} else {
-							var labelAry = labelObj.label;
-							var finalLabel = "";
-							for (var k in labelAry) {
-								var labelEle = labelAry[k];
-								finalLabel += labelEle.id;
-							}
-							n.netlabels = finalLabel;
+							n.vlantag = n.vlan.id;
 						}
 					}
-				}
-				
-				if (n.description == null) {
-					n.description = "";
-				}
-				
-				if (n.vlan == null) {
-					n.vlantag = "-";
-				} else {
-					n.vlantag = n.vlan.id;
-				}
-			}
-			
-			if (ndatatable != null) {
-				ndatatable.clear();
-				ndatatable.destroy();
-			}
-			
-			ndatatable = $("#networktable").DataTable({
-				"dom" : '<"top"p>rt<"bottom">',
-				"info" : false,
-				"pageLength" : 10,
-				"data" : allnets,
-				"columns" : NETWORK_COLUMNS,
-				"filter" : false,
-				"lengthChange" : false,
-				"select": {
-					"style": "single"
-				},
-				"language" : {
-					"paginate" : {
-						"previous" : "<",
-						"next" : ">"
+					
+					if (ndatatable != null) {
+						ndatatable.clear();
+						ndatatable.destroy();
 					}
+					
+					ndatatable = $("#networktable").DataTable({
+						"dom" : '<"top"p>rt<"bottom">',
+						"info" : false,
+						"pageLength" : 10,
+						"data" : allnets,
+						"columns" : NETWORK_COLUMNS,
+						"filter" : false,
+						"lengthChange" : false,
+						"select": {
+							"style": "single"
+						},
+						"language" : {
+							"paginate" : {
+								"previous" : "<",
+								"next" : ">"
+							}
+						}
+					});
 				}
-			});
+			})
 		}
-	})
+	});
+	
+	
 };
 
 $(document).ready(function() {
@@ -199,7 +168,36 @@ $(document).ready(function() {
 		$("#ncomment").val("");
 		$("#nmtucustomval").val("");
 		$("#ntag").val("");
-		$("#newnetmodal").modal("show");
+		
+		$.ajax({
+			type: "GET",
+			url: "/api/hosts",
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader("Accept", "application/json");
+				xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+			},
+			success: function(data) {
+				var allhosts = data.host;
+				for (var i in allhosts) {
+					var nicajax = $.ajax({
+						type: "GET",
+						url: "/api/hosts/" + allhosts[i].id + "/nics",
+						beforeSend: function(xhr) {
+							xhr.setRequestHeader("Accept", "application/json");
+							xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+						},
+						async : false
+					});
+					var hnics = nicajax.responseJSON.host_nic;
+					for (var j in hnics) {
+						if (hnics[j].network == null) {
+							$("#nnichost").append(new Option(allhosts[i].name + "/" + hnics[j].name, allhosts[i].id + "/nics/" + hnics[j].id, false));
+						}
+					}
+				}
+				$("#newnetmodal").modal("show");
+			}
+		})
 	});
 	
 	$("#editnetbutton").on("click", function() {
@@ -282,6 +280,8 @@ $(document).ready(function() {
 			}
 		}
 		
+		var hostnicurl = $("#nnichost option:selected").val();
+		
 		$.ajax({
 			type: "POST",
 			url: "/api/networks",
@@ -294,7 +294,38 @@ $(document).ready(function() {
 			$("#nname").val() + "</name><description>" + $("#ndesc").val() + "</description><comment>" + $("#ncomment").val() + "</comment><mtu>" +
 			mtu + "</mtu>" + vlanxml + "<usages><usage>vm</usage></usages><cluster id=\"" + DEFAULT_CLUSTER_ID + "\" /></network>",
 			success: function(data) {
-				reloadData();
+				$.ajax({
+					type: "POST",
+					url: "/api/clusters/" + DEFAULT_CLUSTER_ID + "/networks",
+					beforeSend: function(xhr) {
+						xhr.setRequestHeader("Accept", "application/json");
+						xhr.setRequestHeader("Content-Type", "application/xml");
+						xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+					},
+					data: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><network><name>" +
+					$("#nname").val() + "</name></network>",
+					success: function(netdata) {
+						$.ajax({
+							type: "POST",
+							url: "/api/hosts/" + hostnicurl + "/attach",
+							beforeSend: function(xhr) {
+								xhr.setRequestHeader("Accept", "application/json");
+								xhr.setRequestHeader("Content-Type", "application/xml");
+								xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+							},
+							data: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><action><network><name>" + $("#nname").val() + "</name></network></action>",
+							success: function(attachdata) {
+								reloadData();
+							},
+							error: function(attacherr) {
+								alert(attacherr.responseJSON.detail);
+							}
+						});
+					},
+					error: function(neterr) {
+						alert(neterr.responseJSON.detail);
+					}
+				})
 			},
 			error: function(err) {
 				alert(err.responseJSON.detail);
@@ -341,29 +372,29 @@ $(document).ready(function() {
 		});
 	});
 
-			// $('.page.ui.modal').modal('show');
-			// $('.newnet.ui.modal').modal('show');
-			// $('.newuser.ui.modal').modal('show');
-			// $('.attachiso.ui.modal').modal('show');
-			$dropdownItem = $('.menu .dropdown .item'), $menuItem = $(
-					'.menu a.item').not($dropdownItem), $('.ui.checkbox')
-					.checkbox();
-			$('.ui.radio.checkbox').checkbox();
-			handler = {
+	// $('.page.ui.modal').modal('show');
+	// $('.newnet.ui.modal').modal('show');
+	// $('.newuser.ui.modal').modal('show');
+	// $('.attachiso.ui.modal').modal('show');
+	$dropdownItem = $('.menu .dropdown .item'), $menuItem = $(
+			'.menu a.item').not($dropdownItem), $('.ui.checkbox')
+			.checkbox();
+	$('.ui.radio.checkbox').checkbox();
+	handler = {
 
-				activate : function() {
-					if (!$(this).hasClass('dropdown')) {
-						$(this).addClass('active').closest('.ui.menu').find(
-								'.item').not($(this)).removeClass('active');
-					}
-				}
+		activate : function() {
+			if (!$(this).hasClass('dropdown')) {
+				$(this).addClass('active').closest('.ui.menu').find(
+						'.item').not($(this)).removeClass('active');
+			}
+		}
 
-			};
-			$menuItem.on('click', handler.activate);
-			$('.menu .item').tab();
+	};
+	$menuItem.on('click', handler.activate);
+	$('.menu .item').tab();
 
-			$('.selection.dropdown').dropdown('setting', 'transition',
-					'vertical flip').dropdown('set selected');
-			
-			reloadData();
-		});
+	$('.selection.dropdown').dropdown('setting', 'transition',
+			'vertical flip').dropdown('set selected');
+	
+	reloadData();
+});
