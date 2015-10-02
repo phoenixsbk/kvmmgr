@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>cn.lynx.emi.kvmmgr.api</groupId>
+    <groupId>org.ovirt.engine.api</groupId>
     <artifactId>interface</artifactId>
     <version>1.0.0</version>
   </parent>

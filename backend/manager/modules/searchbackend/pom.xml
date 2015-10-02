@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>cn.lynx.emi.kvmmgr.core</groupId>
+		<groupId>org.ovirt.engine.core</groupId>
 		<artifactId>manager-modules</artifactId>
 		<version>1.0.0</version>
 	</parent>
@@ -51,7 +51,7 @@
 
 			<!-- Create the JBoss module: -->
 			<plugin>
-				<groupId>cn.lynx.emi.kvmmgr</groupId>
+				<groupId>org.ovirt.engine</groupId>
 				<artifactId>jboss-modules-maven-plugin</artifactId>
 			</plugin>
 

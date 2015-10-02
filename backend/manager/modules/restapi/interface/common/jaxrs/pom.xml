@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>cn.lynx.emi.kvmmgr.api</groupId>
+		<groupId>org.ovirt.engine.api</groupId>
 		<artifactId>common-parent</artifactId>
 		<version>1.0.0</version>
 	</parent>
@@ -16,12 +16,12 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>${engine.groupId}</groupId>
+			<groupId>org.ovirt.engine.core</groupId>
 			<artifactId>utils</artifactId>
 			<version>${engine.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>cn.lynx.emi.kvmmgr.api</groupId>
+			<groupId>org.ovirt.engine.api</groupId>
 			<artifactId>restapi-definition</artifactId>
 			<version>${engine.version}</version>
 		</dependency>
@@ -66,7 +66,7 @@
 		<plugins>
 			<!-- Create the JBoss module: -->
 			<plugin>
-				<groupId>cn.lynx.emi.kvmmgr</groupId>
+				<groupId>org.ovirt.engine</groupId>
 				<artifactId>jboss-modules-maven-plugin</artifactId>
 			</plugin>
 		</plugins>

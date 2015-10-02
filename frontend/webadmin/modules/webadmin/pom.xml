@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>webadmin-modules</artifactId>
-		<groupId>cn.lynx.emi.kvmmgr.ui</groupId>
+		<groupId>org.ovirt.engine.ui</groupId>
 		<version>1.0.0</version>
 	</parent>
 	<artifactId>webadmin</artifactId>
@@ -206,7 +206,7 @@
 							<runTarget>ovirt-engine/webadmin/WebAdmin.html</runTarget>
 							<module>org.ovirt.engine.ui.webadmin.WebAdmin</module>
 							<webappDirectory>${project.build.directory}/generated-gwt</webappDirectory>
-        					<extraJvmArgs>-Xmx4G -XX:MaxPermSize=2048M -XX:PermSize=512M</extraJvmArgs>
+        					<extraJvmArgs>-Xmx12G -XX:MaxPermSize=2048M -XX:PermSize=512M</extraJvmArgs>
 						</configuration>
 						<executions>
 							<execution>

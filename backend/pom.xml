@@ -2,13 +2,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>cn.lynx.emi.kvmmgr</groupId>
+    <groupId>org.ovirt.engine</groupId>
     <artifactId>root</artifactId>
     <version>1.0.0</version>
   </parent>
 
   <artifactId>backend</artifactId>
-  <groupId>cn.lynx.emi.kvmmgr.core</groupId>
+  <groupId>org.ovirt.engine.core</groupId>
   <packaging>pom</packaging>
 
   <name>KVM Manager Modules - backend</name>
@@ -19,7 +19,7 @@
   </modules>
 
   <properties>
-    <engine.groupId>cn.lynx.emi.kvmmgr.core</engine.groupId>
+    <engine.groupId>org.ovirt.engine.core</engine.groupId>
   </properties>
 
 </project>

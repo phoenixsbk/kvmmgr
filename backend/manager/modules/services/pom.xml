@@ -4,14 +4,14 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>cn.lynx.emi.kvmmgr.core</groupId>
+		<groupId>org.ovirt.engine.core</groupId>
 		<artifactId>manager-modules</artifactId>
 		<version>1.0.0</version>
 	</parent>
 
 	<artifactId>services</artifactId>
 	<packaging>war</packaging>
-	<name>kvmmgr-engine services</name>
+	<name>ovirt-engine services</name>
 	<description>KVM Manager engine services pages</description>
 
 	<dependencies>

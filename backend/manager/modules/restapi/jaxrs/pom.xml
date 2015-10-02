@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>cn.lynx.emi.kvmmgr.api</groupId>
+		<groupId>org.ovirt.engine.api</groupId>
 		<artifactId>restapi-parent</artifactId>
 		<version>1.0.0</version>
 	</parent>
@@ -14,46 +14,40 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>cn.lynx.emi.kvmmgr.api</groupId>
+			<groupId>org.ovirt.engine.api</groupId>
 			<artifactId>restapi-definition</artifactId>
 			<version>${engine.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>cn.lynx.emi.kvmmgr.api</groupId>
+			<groupId>org.ovirt.engine.api</groupId>
 			<artifactId>interface-common-jaxrs</artifactId>
 			<version>${engine.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>cn.lynx.emi.kvmmgr.api</groupId>
+			<groupId>org.ovirt.engine.api</groupId>
 			<artifactId>restapi-types</artifactId>
 			<version>${engine.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>${engine.groupId}</groupId>
+			<groupId>org.ovirt.engine.core</groupId>
 			<artifactId>common</artifactId>
 			<version>${engine.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>${engine.groupId}</groupId>
+			<groupId>org.ovirt.engine.core</groupId>
 			<artifactId>utils</artifactId>
 			<version>${engine.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>${engine.groupId}</groupId>
+			<groupId>org.ovirt.engine.core</groupId>
 			<artifactId>branding</artifactId>
-			<version>${engine.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>${engine.groupId}</groupId>
-			<artifactId>license</artifactId>
 			<version>${engine.version}</version>
 		</dependency>
 
@@ -91,7 +85,7 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>cn.lynx.emi.kvmmgr.core</groupId>
+			<groupId>org.ovirt.engine.core</groupId>
 			<artifactId>license</artifactId>
 			<version>${engine.version}</version>
 		</dependency>
@@ -101,7 +95,7 @@
 		<plugins>
 			<!-- Create the JBoss module: -->
 			<plugin>
-				<groupId>cn.lynx.emi.kvmmgr</groupId>
+				<groupId>org.ovirt.engine</groupId>
 				<artifactId>jboss-modules-maven-plugin</artifactId>
 			</plugin>
 		</plugins>

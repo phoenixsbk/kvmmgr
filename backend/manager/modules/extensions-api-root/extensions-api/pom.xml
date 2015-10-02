@@ -3,15 +3,15 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>cn.lynx.emi.kvmmgr.api</groupId>
-    <artifactId>kvmmgr-engine-extensions-api-root</artifactId>
+    <groupId>org.ovirt.engine.api</groupId>
+    <artifactId>ovirt-engine-extensions-api-root</artifactId>
     <version>0.0.0</version>
   </parent>
 
-  <artifactId>kvmmgr-engine-extensions-api</artifactId>
+  <artifactId>ovirt-engine-extensions-api</artifactId>
   <packaging>jar</packaging>
 
-  <name>kvmmgr-engine-extensions-api</name>
+  <name>ovirt-engine-extensions-api</name>
 
   <build>
     <plugins>

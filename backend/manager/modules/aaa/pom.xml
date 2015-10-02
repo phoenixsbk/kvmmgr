@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>cn.lynx.emi.kvmmgr.core</groupId>
+    <groupId>org.ovirt.engine.core</groupId>
     <artifactId>manager-modules</artifactId>
     <version>1.0.0</version>
   </parent>
@@ -35,8 +35,8 @@
       <version>${engine.version}</version>
     </dependency>
     <dependency>
-      <groupId>cn.lynx.emi.kvmmgr.api</groupId>
-      <artifactId>kvmmgr-engine-extensions-api</artifactId>
+      <groupId>org.ovirt.engine.api</groupId>
+      <artifactId>ovirt-engine-extensions-api</artifactId>
       <version>${org.ovirt.engine.api.ovirt-engine-extensions-api.version}</version>
     </dependency>
 
@@ -59,7 +59,7 @@
     <plugins>
       <!-- Create the JBoss module: -->
       <plugin>
-        <groupId>cn.lynx.emi.kvmmgr</groupId>
+        <groupId>org.ovirt.engine</groupId>
         <artifactId>jboss-modules-maven-plugin</artifactId>
       </plugin>
     </plugins>

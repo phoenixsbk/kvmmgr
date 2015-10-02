@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>cn.lynx.emi.kvmmgr</groupId>
+    <groupId>org.ovirt.engine</groupId>
     <artifactId>root</artifactId>
     <version>1.0.0</version>
   </parent>
   <artifactId>frontend-all</artifactId>
-  <groupId>cn.lynx.emi.kvmmgr.ui</groupId>
+  <groupId>org.ovirt.engine.ui</groupId>
   <packaging>pom</packaging>
   <name>KVM Manager Modules :: Frontend</name>
   <description>An aggregator module for all frontend modules.</description>
@@ -15,8 +15,8 @@
     <module>webadmin</module>
   </modules>
   <properties>
-    <engine.groupId>cn.lynx.emi.kvmmgr.ui</engine.groupId>
-    <engine.core.groupId>cn.lynx.emi.kvmmgr.core</engine.core.groupId>
+    <engine.groupId>org.ovirt.engine.ui</engine.groupId>
+    <engine.core.groupId>org.ovirt.engine.core</engine.core.groupId>
     <aspectj.version>1.6.11</aspectj.version>
   </properties>
   <build>
