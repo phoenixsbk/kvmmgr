@@ -172,6 +172,9 @@ var reloadData = function() {
 				"data" : allvms,
 				"columns" : VM_COLUMNS,
 				"filter" : false,
+				"select": {
+					"style": "single"
+				},
 				"lengthChange" : false,
 				"language" : {
 					"paginate" : {
@@ -243,6 +246,116 @@ $(document).ready(function() {
 				alert(neterr.responseJSON.detail);
 			}
 		});
+	});
+	
+	$("#poweroffvmbutton").on("click", function() {
+		if (vmtable.rows(".selected") != null) {
+			var selvm = vmtable.rows(".selected").data()[0];
+			$.ajax({
+				type: "POST",
+				url: "/api/vms/" + selvm.id + "/stop",
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader("Accept", "application/json");
+					xhr.setRequestHeader("Content-Type", "application/xml");
+					xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+				},
+				data: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><action></action>",
+				success: function(stopdata) {
+					reloadData();
+				},
+				error: function(stoperr) {
+					alert(stoperr.responseJSON.fault.detail);
+				}
+			});
+		}
+	});
+	
+	$("#rebootvmbutton").on("click", function() {
+		if (vmtable.rows(".selected") != null) {
+			var selvm = vmtable.rows(".selected").data()[0];
+			$.ajax({
+				type: "POST",
+				url: "/api/vms/" + selvm.id + "/reboot",
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader("Accept", "application/json");
+					xhr.setRequestHeader("Content-Type", "application/xml");
+					xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+				},
+				data: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><action></action>",
+				success: function(rbtdata) {
+					reloadData();
+				},
+				error: function(rbterr) {
+					alert(rbterr.responseJSON.fault.detail);
+				}
+			});
+		}
+	});
+	
+	$("#rmvmbutton").on("click", function() {
+		if (vmtable.rows(".selected") != null) {
+			var selvm = vmtable.rows(".selected").data()[0];
+			$.ajax({
+				type: "DELETE",
+				url: "/api/vms/" + selvm.id,
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader("Accept", "application/json");
+					xhr.setRequestHeader("Content-Type", "application/xml");
+					xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+				},
+				data: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><action><force>true</force></action>",
+				success: function(deldata) {
+					reloadData();
+				},
+				error: function(delerr) {
+					alert(delerr.responseJSON.detail);
+				}
+			});
+		}
+	});
+	
+	$("#startvmbutton").on("click", function() {
+		if (vmtable.rows(".selected") != null) {
+			var selvm = vmtable.rows(".selected").data()[0];
+			$.ajax({
+				type: "POST",
+				url: "/api/vms/" + selvm.id + "/start",
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader("Accept", "application/json");
+					xhr.setRequestHeader("Content-Type", "application/xml");
+					xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+				},
+				data: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><action></action>",
+				success: function(startdata) {
+					reloadData();
+				},
+				error: function(starterr) {
+					alert(starterr.responseJSON.fault.detail);
+				}
+			});
+		}
+	});
+	
+	$("#stopvmbutton").on("click", function() {
+		if (vmtable.rows(".selected") != null) {
+			var selvm = vmtable.rows(".selected").data()[0];
+			$.ajax({
+				type: "POST",
+				url: "/api/vms/" + selvm.id + "/shutdown",
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader("Accept", "application/json");
+					xhr.setRequestHeader("Content-Type", "application/xml");
+					xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+				},
+				data: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><action></action>",
+				success: function(stopdata) {
+					reloadData();
+				},
+				error: function(stoperr) {
+					alert(stoperr.responseJSON.fault.detail);
+				}
+			});
+		}
 	});
 	
 	$("#refreshbutton").on("click", function() {

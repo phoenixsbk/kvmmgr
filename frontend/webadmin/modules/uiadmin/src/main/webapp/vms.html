@@ -13,6 +13,7 @@
 <script type="text/javascript" src="res/jquery.contextMenu.js"></script>
 <script type="text/javascript" src="res/semantic.js"></script>
 <script type="text/javascript" src="res/jquery.dataTables.js"></script>
+<script type="text/javascript" src="res/dataTables.select.min.js"></script>
 <script type="text/javascript" src="res/common.js"></script>
 <script type="text/javascript" src="res/vm/vms.js"></script>
 <link rel="stylesheet" type="text/css" href="res/common.css">
@@ -20,31 +21,43 @@
 <link rel="stylesheet" type="text/css" href="res/jquery.dataTables.css">
 <link rel="stylesheet" type="text/css" href="res/vm/vms.css">
 <link rel="stylesheet" type="text/css" href="res/jquery.contextMenu.css">
+<link rel="stylesheet" type="text/css"
+	href="res/select.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="res/select.bootstrap.min.css">
 
 </head>
 <body id="page">
-	<div class="ui menu" id="topmenucontainer">
-	</div>
+	<div class="ui menu" id="topmenucontainer"></div>
 	<div class="ui grid">
-		<div class="two wide column" style="padding-right: 0px" id="menucontainer">
-		</div>
+		<div class="two wide column" style="padding-right: 0px"
+			id="menucontainer"></div>
 		<div class="fourteen wide column">
 			<!-- <div class="button demo"> -->
 			<div class="table_container">
-				 <div class="ui basic button" id="newvmbutton">
-				 	<i class="plus icon"></i>New VM
-				 </div>
-		          <div class="ui basic button"><i class="edit icon"></i>Edit</div>
-		          <div class="ui basic button"><i class="copy icon"></i>Clone VM</div>
-		          <div class="ui basic button"><i class="play circle outline icon"></i>Run once</div>
-		          <div class="ui basic button"><i class="arrow up icon"></i>up</div>
-		          <div class="ui basic button"><i class="arrow down icon"></i>down</div>
-		          <div class="ui basic button" id="refreshbutton">
-		          	<i class="info circle icon"></i>Refresh
-		          </div>
+				<div class="ui basic button" id="newvmbutton">
+					<i class="plus icon"></i>New VM
+				</div>
+				<div class="ui basic button" id="rmvmbutton">
+					<i class="remove icon"></i>Remove
+				</div>
+				<div class="ui basic button" id="startvmbutton">
+					<i class="play icon"></i>Power On
+				</div>
+				<div class="ui basic button" id="stopvmbutton">
+					<i class="stop icon"></i>Shutdown OS
+				</div>
+				<div class="ui basic button" id="poweroffvmbutton">
+					<i class="power icon"></i>Power Off
+				</div>
+				<div class="ui basic button" id="rebootvmbutton">
+					<i class="repeat icon"></i>Reboot
+				</div>
+				<div class="ui basic button" id="refreshbutton">
+					<i class="refresh icon"></i>Refresh
+				</div>
 				<!-- </div> -->
-				<table id="vmstable" class="display" cellspacing="0"
-					width="100%">
+				<table id="vmstable" class="display" cellspacing="0" width="100%">
 				</table>
 			</div>
 		</div>
@@ -59,19 +72,22 @@
 						<div class="fields">
 							<div class="four wide field name">Name:</div>
 							<div class="twelve wide field value">
-								<input type="text" placeholder="VM Name" id="nvmname" name="nvmname">
+								<input type="text" placeholder="VM Name" id="nvmname"
+									name="nvmname">
 							</div>
 						</div>
 						<div class="fields">
 							<div class="four wide field name">Description:</div>
 							<div class="twelve wide field value">
-								<input type="text" placeholder="Description" id="nvmdesc" name="nvmdesc">
+								<input type="text" placeholder="Description" id="nvmdesc"
+									name="nvmdesc">
 							</div>
 						</div>
 						<div class="fields">
 							<div class="four wide field name">Comment:</div>
 							<div class="twelve wide field value">
-								<input type="text" placeholder="Comment" id="nvmcomment" name="nvmcomment">
+								<input type="text" placeholder="Comment" id="nvmcomment"
+									name="nvmcomment">
 							</div>
 						</div>
 						<div class="pick fields">
@@ -110,7 +126,8 @@
 											<option value="windows_2003x64">Windows 2003 x64</option>
 											<option value="windows_2008">Windows 2008</option>
 											<option value="windows_2008x64">Windows 2008 x64</option>
-											<option value="windows_2008R2x64">Windows 2008 R2 x64</option>
+											<option value="windows_2008R2x64">Windows 2008 R2
+												x64</option>
 											<option value="windows_7">Windows 7</option>
 											<option value="windows_7x64">Windows 7 x64</option>
 											<option value="windows_8">Windows 8</option>
@@ -122,7 +139,8 @@
 								<div class="fields">
 									<div class="seven wide field name">Optimized For:</div>
 									<div class="nine wide field value">
-										<select class="ui selection dropdown" id="nvtype" name="nvtype">
+										<select class="ui selection dropdown" id="nvtype"
+											name="nvtype">
 											<option value="server">Server</option>
 											<option value="desktop">Desktop</option>
 										</select>
@@ -137,7 +155,8 @@
 								<div class="fields">
 									<div class="seven wide field name">Disk Size</div>
 									<div class="nine wide field value">
-										<input type="text" id="nvmdisk" name="nvmdisk" placeHolder="Disk Size (GB)" />
+										<input type="text" id="nvmdisk" name="nvmdisk"
+											placeHolder="Disk Size (GB)" />
 									</div>
 								</div>
 							</div>
