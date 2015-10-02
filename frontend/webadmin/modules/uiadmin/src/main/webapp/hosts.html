@@ -42,8 +42,11 @@
 				<div class="ui basic button" id="rmhostbutton">
 					<i class="remove icon"></i>Remove
 				</div>
+				<div class="ui basic button" id="insthostbutton">
+					<i class="upload icon"></i>Re-Install
+				</div>
 				<div class="ui basic button" id="refreshbutton">
-					<i class="circle icon"></i>Refresh
+					<i class="refresh icon"></i>Refresh
 				</div>
 				<table id="hosttable" class="display" cellspacing="0" width="100%">
 				</table>
@@ -149,6 +152,36 @@
 		</div>
 		<div id="modalbottom" class="actions">
 			<div class="ui primary button" id="editButton">Submit</div>
+			<div class="ui basicv button">Cancel</div>
+		</div>
+	</div>
+	
+	<!-- Reinstall Host Modal -->
+	<div class="page ui modal" id="insthostmodal">
+		<i class="close icon"></i>
+		<div class="header">Re-Install Host</div>
+		<div id="modalwin" class="content">
+			<div class="ui grid">
+				<div class="nine wide column">
+					<div class="ui form">
+						<div class="fields">
+							<div class="four wide field name">Username:</div>
+							<div class="twelve wide field value">
+								<input type="text" placeholder="Username" value="root" readonly="true">
+							</div>
+						</div>
+						<div class="fields">
+							<div class="four wide field name">Password:</div>
+							<div class="twelve wide field value">
+								<input type="password" placeholder="Password" id="instpwd" name="instpwd">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="modalbottom" class="actions">
+			<div class="ui primary button" id="instbutton">Submit</div>
 			<div class="ui basicv button">Cancel</div>
 		</div>
 	</div>

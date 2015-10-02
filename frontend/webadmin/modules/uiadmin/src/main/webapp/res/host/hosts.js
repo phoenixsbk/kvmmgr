@@ -130,7 +130,7 @@ var reloadData = function() {
 			}
 			
 			if (hosttable != null) {
-				hosttable.clearTable();
+				hosttable.clear();
 				hosttable.destroy();
 			}
 			
@@ -201,13 +201,47 @@ $(document).ready(function() {
 				type: "DELETE",
 				url: "/api/hosts/" + selhost.id,
 				beforeSend: function(xhr) {
+					xhr.setRequestHeader("Accept", "application/json");
 					xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
 				},
 				success: function(scs) {
 					setTimeout(reloadData, 1000);
 				},
 				error: function(error) {
-					alert(error);
+					alert(error.responseJSON.detail);
+				}
+			});
+		} else {
+			alert("No Row Selected");
+		}
+	});
+	
+	$("#insthostbutton").on("click", function() {
+		if (hosttable.rows(".selected") != null) {
+			$("#insthostmodal").modal("show");
+		} else {
+			alert("No Row Selected");
+		}
+	});
+	
+	
+	$("#instbutton").on("click", function() {
+		if (hosttable.rows(".selected") != null) {
+			var selhost = hosttable.rows(".selected").data()[0];
+			$.ajax({
+				type: "POST",
+				url: "/api/hosts/" + selhost.id + "/install",
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader("Accept", "application/json");
+					xhr.setRequestHeader("Authorization", "Basic " + sessionStorage["auth"]);
+					xhr.setRequestHeader("Content-Type", "application/xml");
+				},
+				data: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><action><root_password>" + $("#instpwd").val() + "</root_password></action>",
+				success: function(hostinstmsg) {
+					reloadData();
+				},
+				error: function(hostinsterr) {
+					alert(hostinsterr.responseJSON.detail);
 				}
 			});
 		} else {
