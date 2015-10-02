@@ -206,6 +206,7 @@
 							<runTarget>ovirt-engine/webadmin/WebAdmin.html</runTarget>
 							<module>org.ovirt.engine.ui.webadmin.WebAdmin</module>
 							<webappDirectory>${project.build.directory}/generated-gwt</webappDirectory>
+        					<extraJvmArgs>-Xmx4G -XX:MaxPermSize=2048M -XX:PermSize=512M</extraJvmArgs>
 						</configuration>
 						<executions>
 							<execution>
