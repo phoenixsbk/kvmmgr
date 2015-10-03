@@ -207,7 +207,7 @@ BuildRequires:	unzip
 
 Requires:	%{jboss}
 Requires:	%{name}-backend = %{version}-%{release}
-Requires:	%{name}-cli
+Requires:	ovirt-engine-cli
 Requires:	%{name}-dbscripts = %{version}-%{release}
 Requires:	%{name}-restapi = %{version}-%{release}
 Requires:	%{name}-tools = %{version}-%{release}
