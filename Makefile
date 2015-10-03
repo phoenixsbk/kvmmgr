@@ -39,7 +39,7 @@ DEV_EXTRA_BUILD_FLAGS=
 DEV_EXTRA_BUILD_FLAGS_GWT_DEFAULTS=-D gwt.userAgent=gecko1_8
 PATTERNFLY_DIR=/usr/share/patternfly1/resources
 
-PACKAGE_NAME=ovirt-engine
+PACKAGE_NAME=kvmmgr-engine
 ENGINE_NAME=$(PACKAGE_NAME)
 MVN=mvn
 RPMBUILD=rpmbuild
