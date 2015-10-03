@@ -396,10 +396,10 @@ Setup and upgrade scripts for %{ovirt_product_name_short}
 Summary:	Setup and upgrade specific plugins for %{ovirt_product_name_short}
 Group:		%{ovirt_product_group}
 Requires:	%{name}-setup-plugin-ovirt-engine-common = %{version}-%{release}
-Requires:	%{name} >= 3.4.0
-Conflicts:	%{name} < 3.4.0
-Conflicts:	%{name}-dwh < 3.4.0
-Conflicts:	%{name}-reports < 3.4.0
+Requires:	%{name} >= 1.0.2.1
+Conflicts:	%{name} < 1.0.2.1
+Conflicts:	ovirt-engine-dwh < 3.4.0
+Conflicts:	ovirt-engine-reports < 3.4.0
 
 %description setup-plugin-ovirt-engine
 Setup and upgrade specific plugins for %{ovirt_product_name_short}
@@ -577,7 +577,7 @@ Setup and upgrade specific plugins for websocket-proxy
 %package setup-plugin-allinone
 Summary:	All-in-one plugin for %{ovirt_product_name_short}'s setup
 Group:		%{ovirt_product_group}
-Requires:	%{name}-sdk-python >= 3.5.2.1
+Requires:	ovirt-engine-sdk-python >= 3.5.2.1
 Requires:	%{name}-setup-plugin-ovirt-engine = %{version}-%{release}
 Requires:	openssh-server
 Requires:	ovirt-host-deploy >= 1.3.0
