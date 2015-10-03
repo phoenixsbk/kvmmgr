@@ -30,12 +30,11 @@ limitations under the License.
       </module>
 
       <!-- These are dependencies really needed by the RESTAPI: -->
-      <module name="cn.lynx.emi.kvmmgr.api.interface-common-jaxrs" annotations="true" services="import"/>
-      <module name="cn.lynx.emi.kvmmgr.api.restapi-definition" annotations="true" services="import"/>
-      <module name="cn.lynx.emi.kvmmgr.api.restapi-jaxrs" annotations="true" services="import"/>
-      <module name="cn.lynx.emi.kvmmgr.api.restapi-types" annotations="true" services="import"/>
-      <module name="cn.lynx.emi.kvmmgr.core.aaa" />
-      <module name="cn.lynx.emi.kvmmgr.core.license" />
+      <module name="org.ovirt.engine.api.interface-common-jaxrs" annotations="true" services="import"/>
+      <module name="org.ovirt.engine.api.restapi-definition" annotations="true" services="import"/>
+      <module name="org.ovirt.engine.api.restapi-jaxrs" annotations="true" services="import"/>
+      <module name="org.ovirt.engine.api.restapi-types" annotations="true" services="import"/>
+      <module name="org.ovirt.engine.core.aaa"/>
 
     </dependencies>
   </deployment>
