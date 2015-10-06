@@ -8,8 +8,6 @@ import javax.ws.rs.Produces;
 
 import org.ovirt.engine.api.resource.ApiMediaType;
 
-import cn.lynx.emi.LicenseService;
-
 @Path("/license")
 @Produces(ApiMediaType.APPLICATION_JSON)
 public class LicenseResource {

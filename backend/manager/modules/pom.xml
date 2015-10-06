@@ -35,7 +35,6 @@
     <module>services</module>
     <module>docs</module>
     <module>welcome</module>
-    <module>license</module>
   </modules>
 
   <dependencies>

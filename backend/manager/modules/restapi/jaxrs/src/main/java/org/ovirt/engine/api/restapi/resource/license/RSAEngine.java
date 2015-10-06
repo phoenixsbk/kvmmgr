@@ -1,4 +1,4 @@
-package cn.lynx.emi.license;
+package org.ovirt.engine.api.restapi.resource.license;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;

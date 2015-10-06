@@ -13,6 +13,7 @@ import org.jboss.resteasy.spi.interception.PostProcessInterceptor;
 import org.jboss.resteasy.spi.interception.PreProcessInterceptor;
 import org.ovirt.engine.api.common.invocation.Current;
 import org.ovirt.engine.api.common.invocation.MetaData;
+import org.ovirt.engine.api.restapi.resource.license.LicenseService;
 import org.ovirt.engine.api.restapi.util.SessionHelper;
 import org.ovirt.engine.core.common.config.ConfigCommon;
 import org.ovirt.engine.core.common.constants.SessionConstants;
@@ -22,8 +23,6 @@ import org.ovirt.engine.core.common.queries.ConfigurationValues;
 import org.ovirt.engine.core.common.queries.GetConfigurationValueParameters;
 import org.ovirt.engine.core.common.queries.GetValueBySessionQueryParameters;
 import org.ovirt.engine.core.common.queries.VdcQueryType;
-
-import cn.lynx.emi.LicenseService;
 
 @Provider
 @ServerInterceptor

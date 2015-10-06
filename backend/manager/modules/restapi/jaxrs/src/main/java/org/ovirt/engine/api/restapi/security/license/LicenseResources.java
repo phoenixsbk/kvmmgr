@@ -3,8 +3,7 @@ package org.ovirt.engine.api.restapi.security.license;
 import org.ovirt.engine.api.model.License;
 import org.ovirt.engine.api.resource.LicenseResource;
 import org.ovirt.engine.api.restapi.resource.BackendResource;
-
-import cn.lynx.emi.LicenseService;
+import org.ovirt.engine.api.restapi.resource.license.LicenseService;
 
 public class LicenseResources extends BackendResource implements LicenseResource {
 
