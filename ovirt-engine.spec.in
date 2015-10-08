@@ -211,6 +211,7 @@ Requires:	ovirt-engine-cli
 Requires:	%{name}-dbscripts = %{version}-%{release}
 Requires:	%{name}-restapi = %{version}-%{release}
 Requires:	%{name}-tools = %{version}-%{release}
+Requires:	%{name}-uiadmin = %{version}-%{release}
 Requires:	%{name}-userportal = %{version}-%{release}
 Requires:	%{name}-webadmin-portal = %{version}-%{release}
 Requires:	%{name}-websocket-proxy >= %{version}-%{release}
@@ -936,6 +937,7 @@ fi
 %{engine_data}/files/
 %{engine_doc}/AuditLogMessages.properties
 %{engine_doc}/mibs/
+${engine_ear}/uiadmin.war/
 %{engine_ear}/META-INF
 %{engine_ear}/bll.jar
 %{engine_ear}/docs.war/
@@ -1065,6 +1067,10 @@ fi
 %files userportal-debuginfo
 
 %{engine_data}/gwt-symbols/userportal/
+
+%files uiadmin-portal
+
+%{engine_ear}/uiadmin.war
 
 %files webadmin-portal
 
