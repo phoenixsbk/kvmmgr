@@ -1076,7 +1076,7 @@ fi
 
 %{engine_data}/gwt-symbols/userportal/
 
-%files uiadmin-portal
+%files uiadmin
 
 %{engine_ear}/uiadmin.war
 
