@@ -439,6 +439,14 @@ Requires:	%{name} = %{version}-%{release}
 %description dbscripts
 Database scripts for %{ovirt_product_name_short}
 
+%package uiadmin
+Summary:	User admin page
+Group:		%{ovirt_product_group}
+Requires:	%{name} = %{version}-%{release}
+
+%description uiadmin
+The user admin page interface
+
 %package userportal
 Summary:	User Portal of %{ovirt_product_name_short}
 Group:		%{ovirt_product_group}
