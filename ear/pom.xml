@@ -200,42 +200,42 @@
               <groupId>org.ovirt.engine.ui</groupId>
               <artifactId>userportal</artifactId>
               <bundleFileName>userportal.war</bundleFileName>
-              <contextRoot>/kvmmgr-engine/userportal</contextRoot>
+              <contextRoot>/ovirt-engine/userportal</contextRoot>
             </webModule>
 
             <webModule>
               <groupId>org.ovirt.engine.ui</groupId>
               <artifactId>webadmin</artifactId>
               <bundleFileName>webadmin.war</bundleFileName>
-              <contextRoot>/kvmmgr-engine/webadmin</contextRoot>
+              <contextRoot>/ovirt-engine/webadmin</contextRoot>
             </webModule>
 
             <webModule>
               <groupId>org.ovirt.engine.core</groupId>
               <artifactId>services</artifactId>
               <bundleFileName>services.war</bundleFileName>
-              <contextRoot>/kvmmgr-engine/services</contextRoot>
+              <contextRoot>/ovirt-engine/services</contextRoot>
             </webModule>
 
             <webModule>
               <groupId>org.ovirt.engine.core</groupId>
               <artifactId>docs</artifactId>
               <bundleFileName>docs.war</bundleFileName>
-              <contextRoot>/kvmmgr-engine/docs</contextRoot>
+              <contextRoot>/ovirt-engine/docs</contextRoot>
             </webModule>
 
             <webModule>
               <groupId>org.ovirt.engine.core</groupId>
               <artifactId>welcome</artifactId>
               <bundleFileName>welcome.war</bundleFileName>
-              <contextRoot>/kvmmgr-engine/welcome</contextRoot>
+              <contextRoot>/ovirt-engine/welcome</contextRoot>
             </webModule>
             
             <webModule>
               <groupId>org.ovirt.engine.ui</groupId>
               <artifactId>uiadmin</artifactId>
               <bundleFileName>uiadmin.war</bundleFileName>
-              <contextRoot>/kvmmgr-engine</contextRoot>
+              <contextRoot>/ovirt-engine/ui</contextRoot>
             </webModule>
 
             <!-- ** EJB-JARs -->
