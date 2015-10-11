@@ -4,6 +4,7 @@ import org.ovirt.engine.api.model.License;
 import org.ovirt.engine.api.resource.LicenseResource;
 import org.ovirt.engine.api.restapi.resource.BackendResource;
 import org.ovirt.engine.api.restapi.resource.license.LicenseService;
+import org.ovirt.engine.api.restapi.resource.license.RSAEngine;
 
 public class LicenseResources extends BackendResource implements LicenseResource {
 
@@ -19,6 +20,11 @@ public class LicenseResources extends BackendResource implements LicenseResource
 		l.setMemCount(LicenseService.getInstance().getMem());
 		l.setExpireDate(LicenseService.getInstance().getExpire());
 		return l;
+	}
+	
+	@Override
+	public String getMachineCode() {
+		return RSAEngine.getMachineCode();
 	}
 
 	@Override

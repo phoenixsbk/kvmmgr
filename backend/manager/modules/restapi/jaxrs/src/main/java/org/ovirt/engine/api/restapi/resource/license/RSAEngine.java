@@ -22,9 +22,15 @@ public class RSAEngine {
 	private static final String MACHINE_HW_FILE = "/var/kvmmgr/kmhw.inc";
 	private static final String LICENSE_CODE_FILE = "/var/kvmmgr/license.inc";
 	
-	public static final boolean InitializeMachine() {
-		String machineCode = _generateMachineCode();
-		return _storeFile(MACHINE_HW_FILE, machineCode);
+	public static final String getMachineCode() {
+		String machineCode = _readFile(MACHINE_HW_FILE);
+		if (machineCode == null) {
+			machineCode = _generateMachineCode();
+			_storeFile(MACHINE_HW_FILE, machineCode);
+		}
+		
+		return machineCode;
+		
 	}
 
 	private static final String _generateMachineCode() {
@@ -50,13 +56,9 @@ public class RSAEngine {
 	
 	public static final LicenseBean retrieveLicense() {
 		String license = _readFile(LICENSE_CODE_FILE);
-		String machineCode = _readFile(MACHINE_HW_FILE);
-		if (machineCode == null) {
-			machineCode = _generateMachineCode();
-			_storeFile(MACHINE_HW_FILE, machineCode);
-		}
+		String machineCode = getMachineCode();
 		
-		if (license == null) {
+		if (license == null || machineCode == null) {
 			return null;
 		}
 		
@@ -121,11 +123,11 @@ public class RSAEngine {
 	}
 
 	private static final String _decryptByPubKey(String data) {
-		return _cryptoByKey(data, Cipher.ENCRYPT_MODE);
+		return _cryptoByKey(data, Cipher.DECRYPT_MODE);
 	}
 
 	private static final String _encryptByPubKey(String data) {
-		return _cryptoByKey(data, Cipher.DECRYPT_MODE);
+		return _cryptoByKey(data, Cipher.ENCRYPT_MODE);
 	}
 
 	private static final String _cryptoByKey(String data, int mode) {

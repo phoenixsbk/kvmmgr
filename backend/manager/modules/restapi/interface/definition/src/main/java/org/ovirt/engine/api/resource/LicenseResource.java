@@ -14,6 +14,10 @@ public interface LicenseResource {
 	@GET
 	public License getLicense();
 	
+	@GET
+	@Path("/machine")
+	public String getMachineCode();
+	
 	@POST
 	public boolean updateLicense(String license);
 }
