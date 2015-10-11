@@ -5,19 +5,30 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import org.ovirt.engine.api.model.License;
-
 @Path("/license")
 @Produces(ApiMediaType.APPLICATION_JSON)
 public interface LicenseResource {
 	
 	@GET
-	public License getLicense();
-	
-	@GET
-	@Path("/machine")
-	public String getMachineCode();
+	@Path("/validate")
+	public boolean isLicenseValid();
 	
 	@POST
-	public boolean updateLicense(String license);
+	public boolean UpdateLicense(String key);
+	
+	@GET
+	@Path("/machinecode")
+	public String getMachineCode();
+	
+	@GET
+	@Path("/cpu")
+	public int getLicenseCPU();
+	
+	@GET
+	@Path("/mem")
+	public long getLicenseMem();
+	
+	@GET
+	@Path("/expire")
+	public long getLicenseExpire();
 }

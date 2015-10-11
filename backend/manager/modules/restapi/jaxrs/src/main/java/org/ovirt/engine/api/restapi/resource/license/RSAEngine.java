@@ -17,6 +17,8 @@ import java.util.Enumeration;
 
 import javax.crypto.Cipher;
 
+import org.apache.commons.codec.binary.Base64;
+
 public class RSAEngine {
 	private static final String LICENSE_CORE_KEY = "MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAoc7HGhetqiAwyrVZxBskNusiz9TNPX0niaIi7C16DxnKguANpn1lDOk/U2T+gOJiLIt/zL3bvhjCXN0krD4lZUJZxC2RXSQG97622aFeYuYOKtkzmrNwlRK8RCeKlGbydF9V7O+LmKHEzlpttLx0pglw0x4ps4ALEc82wZErHhZ9m76m1ykoNOSY+Khz4OPhMVXKm0EYwitTktfSEsV/vIsXymbJCUprkN1Nw7ftjA3UyU9LvRhs1puczss8kp0WLE9gOB9dxzV+QrmLnZWVvHAF8BGsalQpOQ/KaY9hl8UIqleYqBcYa6sfX9vzbl66RVII7l30Hx2wKK6PhAs51NeGE1s3wg81fq80aC3vOhlwoAIK8w9gXKrctbg8bV0pf2uLUVkjFR63YgTsQbHJTux8fnRM99//x8quM3/g+qVVUsYBwmHbl6YEUxTyYsO+auYCLrsxBvPSa5JVXiTmDyz22NBOaDdNqjSVygyXB6nH7CZogze1IDOqbzNPy+Lu20bEAQKVXwU8kWIW22dWrNYVXDeCDYb8dkLZj9qPHIwDQeM4kgLqnEMfObvZJbgbbJ1SQ84gZ0RPFtgIic6KTel/8ToSVZRuBrz5p6Eb5J9kB1a6Xb/5uVenmtHA4y4L+he6Fuq07QRnfzTZw7Gi3hunwxPOzrQoE45MdSVD9gUCAwEAAQ==";
 	private static final String MACHINE_HW_FILE = "/var/kvmmgr/kmhw.inc";
@@ -47,7 +49,7 @@ public class RSAEngine {
 		} catch (SocketException e) {
 		}
 		
-		return _encryptByPubKey(sb.toString());
+		return sb.toString();
 	}
 	
 	public static final boolean storeLicense(String license) {
@@ -62,11 +64,11 @@ public class RSAEngine {
 			return null;
 		}
 		
-		String decryptedLicense = _decryptByPubKey(license);
+		String decryptedLicense = _decrypt(license);
 		
 		// Deserialize to license bean
 		try {
-			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(decryptedLicense.getBytes("UTF-8")));
+			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(Base64.decodeBase64(decryptedLicense)));
 			LicenseBean bean = (LicenseBean) ois.readObject();
 			
 			if (!bean.getMachineCode().equalsIgnoreCase(machineCode)) {
@@ -83,7 +85,7 @@ public class RSAEngine {
 		}
 	}
 	
-	public static final boolean _storeFile(String filename, String content) {
+	private static final boolean _storeFile(String filename, String content) {
 		File f = new File(filename);
 		if (f.exists()) {
 			f.delete();
@@ -122,17 +124,9 @@ public class RSAEngine {
 		}
 	}
 
-	private static final String _decryptByPubKey(String data) {
-		return _cryptoByKey(data, Cipher.DECRYPT_MODE);
-	}
-
-	private static final String _encryptByPubKey(String data) {
-		return _cryptoByKey(data, Cipher.ENCRYPT_MODE);
-	}
-
-	private static final String _cryptoByKey(String data, int mode) {
+	private static final String _decrypt(String data) {
 		byte[] corekey = Base64.decodeBase64(LICENSE_CORE_KEY);
-
+		byte[] rawData = Base64.decodeBase64(data);
 		X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(corekey);
 		
 		try {
@@ -140,9 +134,9 @@ public class RSAEngine {
 			Key publicKey = keyFactory.generatePublic(x509EncodedKeySpec);
 
 			Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
-			cipher.init(mode, publicKey);
+			cipher.init(Cipher.DECRYPT_MODE, publicKey);
 			
-			return Base64.encodeBase64String(cipher.doFinal(data.getBytes("UTF-8")));
+			return new String(cipher.doFinal(rawData), "UTF-8");
 		} catch (Exception e) {
 			return null;
 		}

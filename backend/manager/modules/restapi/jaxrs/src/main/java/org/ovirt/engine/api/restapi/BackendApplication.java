@@ -36,8 +36,8 @@ import org.ovirt.engine.api.restapi.resource.BackendApiResource;
 import org.ovirt.engine.api.restapi.resource.BackendBookmarksResource;
 import org.ovirt.engine.api.restapi.resource.BackendCapabilitiesResource;
 import org.ovirt.engine.api.restapi.resource.BackendClustersResource;
-import org.ovirt.engine.api.restapi.resource.BackendDataCentersResource;
 import org.ovirt.engine.api.restapi.resource.BackendCpuProfilesResource;
+import org.ovirt.engine.api.restapi.resource.BackendDataCentersResource;
 import org.ovirt.engine.api.restapi.resource.BackendDiskProfilesResource;
 import org.ovirt.engine.api.restapi.resource.BackendDisksResource;
 import org.ovirt.engine.api.restapi.resource.BackendEventsResource;
@@ -60,6 +60,7 @@ import org.ovirt.engine.api.restapi.resource.BackendVnicProfilesResource;
 import org.ovirt.engine.api.restapi.resource.aaa.BackendDomainsResource;
 import org.ovirt.engine.api.restapi.resource.aaa.BackendGroupsResource;
 import org.ovirt.engine.api.restapi.resource.aaa.BackendUsersResource;
+import org.ovirt.engine.api.restapi.resource.license.BackendLicenseResource;
 import org.ovirt.engine.api.restapi.resource.validation.IOExceptionMapper;
 import org.ovirt.engine.api.restapi.resource.validation.JaxbExceptionMapper;
 import org.ovirt.engine.api.restapi.resource.validation.JaxbMarshallExceptionMapper;
@@ -68,7 +69,6 @@ import org.ovirt.engine.api.restapi.resource.validation.MalformedIdExceptionMapp
 import org.ovirt.engine.api.restapi.resource.validation.MappingExceptionMapper;
 import org.ovirt.engine.api.restapi.resource.validation.ValidatorLocator;
 import org.ovirt.engine.api.restapi.security.auth.SessionProcessor;
-import org.ovirt.engine.api.restapi.security.license.LicenseResources;
 import org.ovirt.engine.api.restapi.types.MappingLocator;
 import org.ovirt.engine.api.restapi.util.SessionHelper;
 import org.ovirt.engine.api.restapi.util.VmHelper;
@@ -151,7 +151,7 @@ public class BackendApplication extends Application {
         addResource(new BackendSystemPermissionsResource());
         addResource(new BackendDiskProfilesResource());
         addResource(new BackendCpuProfilesResource());
-        addResource(new LicenseResources());
+        addResource(new BackendLicenseResource());
         addResource(VmHelper.getInstance());
 
         final SessionProcessor processor = new SessionProcessor();
