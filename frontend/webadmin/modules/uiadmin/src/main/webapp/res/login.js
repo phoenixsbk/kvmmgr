@@ -11,6 +11,19 @@ $(document).ready(function() {
 		}
 	});
 	
+	$.ajax({
+		type: "GET",
+		url: "/api/license/all",
+		success: function(alldata) {
+			console.log(alldata);
+			$("#clicense").html(alldata);
+		},
+		error: function(allerr) {
+			console.log(allerr);
+			alert(allerr);
+		}
+	});
+	
     $('#inputkey').on("click", function(){
     	$('.inputkey.ui.modal').modal('show');
     });
@@ -20,6 +33,7 @@ $(document).ready(function() {
     		$.ajax({
     			type: "POST",
     			url: "/api/license",
+    			data: $("#licensetext").val(),
     			success: function(data) {
     				console.log(data);
     				alert("License Update Successfully.");

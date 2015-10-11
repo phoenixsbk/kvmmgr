@@ -31,4 +31,8 @@ public interface LicenseResource {
 	@GET
 	@Path("/expire")
 	public long getLicenseExpire();
+	
+	@GET
+	@Path("/all")
+	public String getLicenseInfo();
 }

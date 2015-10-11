@@ -1,5 +1,7 @@
 package org.ovirt.engine.api.restapi.resource.license;
 
+import java.util.Date;
+
 import javax.ws.rs.FormParam;
 
 import org.ovirt.engine.api.resource.LicenseResource;
@@ -36,5 +38,15 @@ public class BackendLicenseResource extends BackendResource implements LicenseRe
 	@Override
 	public long getLicenseExpire() {
 		return LicenseService.getInstance().getExpire();
+	}
+	
+	@Override
+	public String getLicenseInfo() {
+		String ss = "";
+		ss += "CPU:[" + LicenseService.getInstance().getCpu() + "]";
+		long mem = LicenseService.getInstance().getMem();
+		ss += ",Memory:[" + (mem / 1024 / 1024 / 1024) + "]";
+		ss += ",Expire:[" + new Date(LicenseService.getInstance().getExpire()) + "]";
+		return ss;
 	}
 }
