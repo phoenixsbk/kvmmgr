@@ -56,6 +56,10 @@ public class RSAEngine {
 			_storeFile(MACHINE_HW_FILE, machineCode);
 		}
 		
+		if (license == null) {
+			return null;
+		}
+		
 		String decryptedLicense = _decryptByPubKey(license);
 		
 		// Deserialize to license bean

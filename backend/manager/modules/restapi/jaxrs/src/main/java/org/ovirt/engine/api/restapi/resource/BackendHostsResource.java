@@ -2,6 +2,7 @@ package org.ovirt.engine.api.restapi.resource;
 
 import java.util.List;
 
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -17,6 +18,7 @@ import org.ovirt.engine.api.model.Statistic;
 import org.ovirt.engine.api.model.Statistics;
 import org.ovirt.engine.api.resource.HostResource;
 import org.ovirt.engine.api.resource.HostsResource;
+import org.ovirt.engine.api.restapi.resource.license.LicenseService;
 import org.ovirt.engine.api.utils.LinkHelper;
 import org.ovirt.engine.core.common.action.AddVdsActionParameters;
 import org.ovirt.engine.core.common.action.RemoveVdsParameters;
@@ -84,6 +86,11 @@ public class BackendHostsResource extends AbstractBackendCollectionResource<Host
 
     @Override
     public Response add(Host host) {
+    	if (!LicenseService.getInstance().validateCpu(host.getCpu().getCores().getCore().size()) ||
+    		!LicenseService.getInstance().validateMem(host.getMemory())) {
+    		throw new WebApplicationException(new Exception("License Insufficient"), 500);
+    	}
+    	
         validateEnums(Host.class, host);
         validateParameters(host, "name", "address");
         VdsStatic staticHost = getMapper(Host.class, VdsStatic.class).map(host, null);
