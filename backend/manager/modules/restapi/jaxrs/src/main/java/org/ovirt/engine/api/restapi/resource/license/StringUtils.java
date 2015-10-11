@@ -2,8 +2,6 @@ package org.ovirt.engine.api.restapi.resource.license;
 
 import java.io.UnsupportedEncodingException;
 
-import org.apache.commons.codec.CharEncoding;
-
 /**
  * Converts String to and from bytes using the encodings required by the Java specification. These encodings are specified in <a
  * href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
@@ -29,7 +27,7 @@ public class StringUtils {
      * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesIso8859_1(String string) {
-        return StringUtils.getBytesUnchecked(string, CharEncoding.ISO_8859_1);
+        return StringUtils.getBytesUnchecked(string, "ISO-8859-1");
     }
 
     /**
@@ -45,7 +43,7 @@ public class StringUtils {
      * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesUsAscii(String string) {
-        return StringUtils.getBytesUnchecked(string, CharEncoding.US_ASCII);
+        return StringUtils.getBytesUnchecked(string, "US-ASCII");
     }
 
     /**
@@ -61,7 +59,7 @@ public class StringUtils {
      * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesUtf16(String string) {
-        return StringUtils.getBytesUnchecked(string, CharEncoding.UTF_16);
+        return StringUtils.getBytesUnchecked(string, "UTF-16");
     }
 
     /**
@@ -77,7 +75,7 @@ public class StringUtils {
      * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesUtf16Be(String string) {
-        return StringUtils.getBytesUnchecked(string, CharEncoding.UTF_16BE);
+        return StringUtils.getBytesUnchecked(string, "UTF-16BE");
     }
 
     /**
@@ -93,7 +91,7 @@ public class StringUtils {
      * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesUtf16Le(String string) {
-        return StringUtils.getBytesUnchecked(string, CharEncoding.UTF_16LE);
+        return StringUtils.getBytesUnchecked(string, "UTF-16LE");
     }
 
     /**
@@ -109,28 +107,9 @@ public class StringUtils {
      * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesUtf8(String string) {
-        return StringUtils.getBytesUnchecked(string, CharEncoding.UTF_8);
+        return StringUtils.getBytesUnchecked(string, "UTF-8");
     }
 
-    /**
-     * Encodes the given string into a sequence of bytes using the named charset, storing the result into a new byte
-     * array.
-     * <p>
-     * This method catches {@link UnsupportedEncodingException} and rethrows it as {@link IllegalStateException}, which
-     * should never happen for a required charset name. Use this method when the encoding is required to be in the JRE.
-     * </p>
-     * 
-     * @param string
-     *            the String to encode
-     * @param charsetName
-     *            The name of a required {@link java.nio.charset.Charset}
-     * @return encoded bytes
-     * @throws IllegalStateException
-     *             Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen for a
-     *             required charset name.
-     * @see CharEncoding
-     * @see String#getBytes(String)
-     */
     public static byte[] getBytesUnchecked(String string, String charsetName) {
         if (string == null) {
             return null;
@@ -186,7 +165,7 @@ public class StringUtils {
      *             charset is required.
      */
     public static String newStringIso8859_1(byte[] bytes) {
-        return StringUtils.newString(bytes, CharEncoding.ISO_8859_1);
+        return StringUtils.newString(bytes, "ISO-8859-1");
     }
 
     /**
@@ -200,7 +179,7 @@ public class StringUtils {
      *             charset is required.
      */
     public static String newStringUsAscii(byte[] bytes) {
-        return StringUtils.newString(bytes, CharEncoding.US_ASCII);
+        return StringUtils.newString(bytes, "US-ASCII");
     }
 
     /**
@@ -214,7 +193,7 @@ public class StringUtils {
      *             charset is required.
      */
     public static String newStringUtf16(byte[] bytes) {
-        return StringUtils.newString(bytes, CharEncoding.UTF_16);
+        return StringUtils.newString(bytes, "UTF-16");
     }
 
     /**
@@ -228,7 +207,7 @@ public class StringUtils {
      *             charset is required.
      */
     public static String newStringUtf16Be(byte[] bytes) {
-        return StringUtils.newString(bytes, CharEncoding.UTF_16BE);
+        return StringUtils.newString(bytes, "UTF-16BE");
     }
 
     /**
@@ -242,7 +221,7 @@ public class StringUtils {
      *             charset is required.
      */
     public static String newStringUtf16Le(byte[] bytes) {
-        return StringUtils.newString(bytes, CharEncoding.UTF_16LE);
+        return StringUtils.newString(bytes, "UTF-16LE");
     }
 
     /**
@@ -256,7 +235,7 @@ public class StringUtils {
      *             charset is required.
      */
     public static String newStringUtf8(byte[] bytes) {
-        return StringUtils.newString(bytes, CharEncoding.UTF_8);
+        return StringUtils.newString(bytes, "UTF-8");
     }
 
 }

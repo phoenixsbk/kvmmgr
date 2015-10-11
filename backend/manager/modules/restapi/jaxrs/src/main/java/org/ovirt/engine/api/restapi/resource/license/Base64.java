@@ -2,11 +2,6 @@ package org.ovirt.engine.api.restapi.resource.license;
 
 import java.math.BigInteger;
 
-import org.apache.commons.codec.BinaryDecoder;
-import org.apache.commons.codec.BinaryEncoder;
-import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.EncoderException;
-
 /**
  * Provides Base64 encoding and decoding as defined by RFC 2045.
  * 
@@ -33,7 +28,7 @@ import org.apache.commons.codec.EncoderException;
  * @since 1.0
  * @version $Id: Base64.java 801706 2009-08-06 16:27:06Z niallp $
  */
-public class Base64 implements BinaryEncoder, BinaryDecoder {
+public class Base64 {
     private static final int DEFAULT_BUFFER_RESIZE_FACTOR = 2;
 
     private static final int DEFAULT_BUFFER_SIZE = 8192;
@@ -674,23 +669,13 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
         return encodeBase64(binaryData, true);
     }
 
-    /**
-     * Decodes an Object using the base64 algorithm. This method is provided in order to satisfy the requirements of the
-     * Decoder interface, and will throw a DecoderException if the supplied object is not of type byte[] or String.
-     * 
-     * @param pObject
-     *            Object to decode
-     * @return An object (of type byte[]) containing the binary data which corresponds to the byte[] or String supplied.
-     * @throws DecoderException
-     *             if the parameter supplied is not of type byte[]
-     */
-    public Object decode(Object pObject) throws DecoderException {        
+    public Object decode(Object pObject) throws Exception {        
         if (pObject instanceof byte[]) {
             return decode((byte[]) pObject);
         } else if (pObject instanceof String) {
             return decode((String) pObject);
         } else {
-            throw new DecoderException("Parameter supplied to Base64 decode is not a byte[] or a String");
+            throw new Exception("Parameter supplied to Base64 decode is not a byte[] or a String");
         }
     }
 
@@ -869,22 +854,10 @@ public class Base64 implements BinaryEncoder, BinaryDecoder {
                 return false;
         }
     }
-
-    // Implementation of the Encoder Interface
-
-    /**
-     * Encodes an Object using the base64 algorithm. This method is provided in order to satisfy the requirements of the
-     * Encoder interface, and will throw an EncoderException if the supplied object is not of type byte[].
-     * 
-     * @param pObject
-     *            Object to encode
-     * @return An object (of type byte[]) containing the base64 encoded data which corresponds to the byte[] supplied.
-     * @throws EncoderException
-     *             if the parameter supplied is not of type byte[]
-     */
-    public Object encode(Object pObject) throws EncoderException {
+    
+    public Object encode(Object pObject) throws Exception {
         if (!(pObject instanceof byte[])) {
-            throw new EncoderException("Parameter supplied to Base64 encode is not a byte[]");
+            throw new Exception("Parameter supplied to Base64 encode is not a byte[]");
         }
         return encode((byte[]) pObject);
     }
