@@ -1,8 +1,33 @@
 
 $(document).ready(function() {
+    $('#inputkey').on("click", function(){
+    	$('.inputkey.ui.modal').modal('show');
+    });
+    
+    $("#keysubmitbutton").on("click", function() {
+    	if ($("#licensetext").val() != "") {
+    		$.ajax({
+    			type: "POST",
+    			url: "/api/license",
+    			success: function(data) {
+    				console.log(data);
+    				alert("License Update Successfully.");
+    			},
+    			error: function(err) {
+    				console.log(err);
+    				alert(err);
+    			}
+    		});
+    	}
+    });
+    
 	$('.selection.dropdown').dropdown();
 	$('.ui.checkbox').checkbox();
 	$("#LoginButton").on("click", function(event) {
+		if ($("#userName").val() == "" || $("#userPwd").val() == "") {
+			alert("Please input valid username and passowrd.");
+			return;
+		}
 		var uname = $("#userName").val() + "@internal";
 		var upwd = $("#userPwd").val();
 		$.ajax({
@@ -25,6 +50,7 @@ $(document).ready(function() {
 			},
 			error : function (err) {
 				console.log(err);
+				alert(err);
 			}
 		});
 	});
