@@ -1,1 +1,1 @@
-RedirectMatch ^/$ /ovirt-engine/
+RedirectMatch ^/$ /ovirt-engine/ui
