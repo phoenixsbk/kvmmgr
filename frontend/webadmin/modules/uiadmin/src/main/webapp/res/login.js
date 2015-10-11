@@ -1,5 +1,16 @@
 
 $(document).ready(function() {
+	$.ajax({
+		type: "GET",
+		url: "/api/license/machinecode",
+		success: function(data) {
+			$("#mcode").html(data);
+		},
+		error: function(err) {
+			alert(err);
+		}
+	});
+	
     $('#inputkey').on("click", function(){
     	$('.inputkey.ui.modal').modal('show');
     });
