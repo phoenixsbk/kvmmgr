@@ -59,9 +59,12 @@ public class SessionProcessor implements PreProcessInterceptor, PostProcessInter
             throw new Failure("Engine session missing");
         }
         
-        String uri = request.getUri().getBaseUri().getRawPath();
-        if (!LicenseService.getInstance().ValidateLicense() && !uri.contains("/license")) {
-        	throw new Failure("Engine license is missing");
+        String uri = request.getUri().getPath();
+        System.err.println("requesting uri:" + uri);
+        if (!uri.contains("/license")) {
+        	 if (!LicenseService.getInstance().ValidateLicense()) {
+             	throw new Failure("Engine license is missing");
+             }
         }
         
         this.request = request;

@@ -12,6 +12,8 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.security.Key;
 import java.security.KeyFactory;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Enumeration;
 
@@ -24,7 +26,7 @@ public class RSAEngine {
 	
 	public static final String getMachineCode() {
 		String machineCode = _readFile(MACHINE_HW_FILE);
-		if (machineCode == null) {
+		if (machineCode == null || machineCode.isEmpty()) {
 			machineCode = _generateMachineCode();
 			_storeFile(MACHINE_HW_FILE, machineCode);
 		}
@@ -41,7 +43,7 @@ public class RSAEngine {
 				NetworkInterface nic = enumsofnet.nextElement();
 				byte[] mac = nic.getHardwareAddress();
 				if (mac != null) {
-					sb.append(Base64.encodeBase64String(mac));
+					sb.append(_sha1(mac).trim());
 				}
 			}
 		} catch (SocketException e) {
@@ -58,10 +60,9 @@ public class RSAEngine {
 		String license = _readFile(LICENSE_CODE_FILE);
 		String machineCode = getMachineCode();
 		
-		if (license == null || machineCode == null) {
+		if (license == null || machineCode == null || license.isEmpty() || machineCode.isEmpty()) {
 			return null;
 		}
-		
 		String decryptedLicense = _decrypt(license);
 		
 		if (decryptedLicense == null) {
@@ -140,6 +141,17 @@ public class RSAEngine {
 			
 			return new String(cipher.doFinal(rawData), "UTF-8");
 		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	private static final String _sha1(byte[] data) {
+		try {
+			MessageDigest messageDigest = MessageDigest.getInstance("SHA1");
+			byte[] digests = messageDigest.digest(data);
+			return Base64.encodeBase64String(digests);
+		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			return null;
 		}

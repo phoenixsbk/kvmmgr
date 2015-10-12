@@ -1,5 +1,6 @@
 package org.ovirt.engine.api.restapi.resource.license;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.ws.rs.FormParam;
@@ -22,7 +23,7 @@ public class BackendLicenseResource extends BackendResource implements LicenseRe
 	
 	@Override
 	public String getMachineCode() {
-		return RSAEngine.getMachineCode();
+		return "{\"machinecode\":\"" + RSAEngine.getMachineCode() + "\"}";
 	}
 	
 	@Override
@@ -42,11 +43,12 @@ public class BackendLicenseResource extends BackendResource implements LicenseRe
 	
 	@Override
 	public String getLicenseInfo() {
-		String ss = "";
-		ss += "CPU:[" + LicenseService.getInstance().getCpu() + "]";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String ss = "{";
+		ss += "\"cpu\":" + LicenseService.getInstance().getCpu();
 		long mem = LicenseService.getInstance().getMem();
-		ss += ",Memory:[" + (mem / 1024 / 1024 / 1024) + "]";
-		ss += ",Expire:[" + new Date(LicenseService.getInstance().getExpire()) + "]";
+		ss += ",\"memory\":" + (mem / 1024 / 1024 / 1024);
+		ss += ",\"expire\":\"" + sdf.format(new Date(LicenseService.getInstance().getExpire())) + "\"}";
 		return ss;
 	}
 }

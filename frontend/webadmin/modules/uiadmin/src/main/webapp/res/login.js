@@ -3,8 +3,11 @@ $(document).ready(function() {
 	$.ajax({
 		type: "GET",
 		url: "/api/license/machinecode",
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader("Accept", "application/json");
+		},
 		success: function(data) {
-			$("#mcode").html(data);
+			$("#mcode").html(data.machinecode);
 		},
 		error: function(err) {
 			alert(err);
@@ -14,9 +17,15 @@ $(document).ready(function() {
 	$.ajax({
 		type: "GET",
 		url: "/api/license/all",
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader("Accept", "application/json");
+		},
 		success: function(alldata) {
-			console.log(alldata);
-			$("#clicense").html(alldata);
+			if (alldata.cpu < 0) {
+				$("#clicense").html("License Not Available.");
+			} else {
+				$("#clicense").html("CPU:[" + alldata.cpu + "], Mem:[" + alldata.memory + "],Expire:[" + alldata.expire + "]");
+			}
 		},
 		error: function(allerr) {
 			console.log(allerr);
