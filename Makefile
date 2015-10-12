@@ -282,6 +282,11 @@ rpm:	srpm
 	rm -rf "$(OUTPUT_RPMBUILD)"
 	mkdir -p "$(OUTPUT_RPMBUILD)"/{SPECS,RPMS,SRPMS,SOURCES,BUILD,BUILDROOT}
 	mkdir -p "$(OUTPUT_DIR)"
+	mkdir -p /var/kvmmgr
+	touch /var/kvmmgr/kmhw.inc
+	touch /var/kvmmgr/license.inc
+	chmod 666 /var/kvmmgr/kmhw.inc
+	chmod 666 /var/kvmmgr/license.inc
 	$(RPMBUILD) --define="_topdir $(OUTPUT_RPMBUILD)" $(RPMBUILD_EXTRA_ARGS) --rebuild "$(OUTPUT_DIR)/$(PACKAGE_NAME)-$(RPM_VERSION)"*.src.rpm
 	mv $(OUTPUT_RPMBUILD)/RPMS/$(ARCH)/*.rpm "$(OUTPUT_DIR)"
 	rm -rf "$(OUTPUT_RPMBUILD)"
