@@ -68,7 +68,7 @@ public class BackendHostsResource extends AbstractBackendCollectionResource<Host
         }
     }
 
-    private Hosts listAll() {
+    public Hosts listAll() {
         if (isFiltered()) {
             return mapCollection(getBackendCollection(VdcQueryType.GetAllHosts,
                     new VdcQueryParametersBase()));
@@ -86,8 +86,22 @@ public class BackendHostsResource extends AbstractBackendCollectionResource<Host
 
     @Override
     public Response add(Host host) {
-    	if (!LicenseService.getInstance().validateCpu(host.getCpu().getCores().getCore().size()) ||
-    		!LicenseService.getInstance().validateMem(host.getMemory())) {
+    	int newcpu = host.getCpu().getCores().getCore().size();
+    	long newmem = host.getMemory();
+    	
+    	Hosts hs = listAll();
+    	int curcpu = 0;
+    	long curmem = 0L;
+    	List<Host> allhs = hs.getHosts();
+    	for (Host h : allhs) {
+    		curcpu += h.getCpu().getCores().getCore().size();
+    		curmem += h.getMemory();
+    	}
+    	
+    	int liccpu = LicenseService.getInstance().getCpu();
+    	long licmem = LicenseService.getInstance().getMem();
+    	
+    	if (curcpu + newcpu > liccpu || curmem + newmem > licmem) {
     		throw new WebApplicationException(new Exception("License Insufficient"), 500);
     	}
     	
