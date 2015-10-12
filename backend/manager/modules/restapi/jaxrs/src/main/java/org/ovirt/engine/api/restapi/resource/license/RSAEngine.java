@@ -64,6 +64,10 @@ public class RSAEngine {
 		
 		String decryptedLicense = _decrypt(license);
 		
+		if (decryptedLicense == null) {
+			System.err.println("Decryption get null value.");
+			return null;
+		}
 		// Deserialize to license bean
 		try {
 			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(Base64.decodeBase64(decryptedLicense)));
@@ -136,6 +140,7 @@ public class RSAEngine {
 			
 			return new String(cipher.doFinal(rawData), "UTF-8");
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
