@@ -34,6 +34,7 @@ $(document).ready(function() {
 	});
 	
     $('#inputkey').on("click", function(){
+    	$("#licensetext").val("");
     	$('.inputkey.ui.modal').modal('show');
     });
     
