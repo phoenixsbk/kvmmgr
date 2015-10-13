@@ -2,6 +2,8 @@ package org.ovirt.engine.api.restapi.resource.license;
 
 import java.util.Date;
 
+import cn.lynx.emi.license.LicenseBean;
+
 public class LicenseService {
 	private static LicenseService instance = new LicenseService();
 	private boolean init = false;

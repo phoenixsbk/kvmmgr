@@ -1,4 +1,4 @@
-package org.ovirt.engine.api.restapi.resource.license;
+package cn.lynx.emi.license;
 
 import java.io.Serializable;
 
